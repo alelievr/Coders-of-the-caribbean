@@ -309,7 +309,7 @@ class GameManager : MonoBehaviour {
             this.initialRemainingTurns = this.remainingTurns = remainingTurns;
         }
 
-        public String toViewString() {
+        public new String toViewString() {
             return join(id, position.y, position.x, srcY, srcX, initialRemainingTurns, remainingTurns, ownerEntityId);
         }
 
@@ -325,7 +325,7 @@ class GameManager : MonoBehaviour {
             this.health = health;
         }
 
-        public String toViewString() {
+        public new String toViewString() {
             return join(id, position.y, position.x, health);
         }
 
@@ -376,7 +376,7 @@ class GameManager : MonoBehaviour {
             this.owner = owner;
         }
 
-        public String toViewString() {
+        public new String toViewString() {
             return join(id, position.y, position.x, orientation, health, speed, (action != null ? action.ToString() : "WAIT"), bow().y, bow().x, stern().y,
                     stern().x, " ;" + (message != null ? message : ""));
         }
@@ -655,7 +655,7 @@ class GameManager : MonoBehaviour {
 
     protected void initReferee(int playerCount, Properties prop) {
         seed = int.Parse("" + prop.getProperty("seed", "" + (Random.Range(-10000000, 10000000))));
-        Random.seed = seed;
+        Random.InitState(seed);
 
         shipsPerPlayer = clamp(
                 Int32.Parse("" + prop.getProperty("shipsPerPlayer", "" + (Random.Range(0, 1 + MAX_SHIPS - MIN_SHIPS) + MIN_SHIPS))), MIN_SHIPS,
@@ -798,32 +798,32 @@ class GameManager : MonoBehaviour {
             Match matchMine = PLAYER_INPUT_MINE_PATTERN.Match(line);
             Ship ship = player.shipsAlive[i++];
 
-            if (matchMove.matches()) {
-                int x = Int32.Parse(matchMove.group("x"));
-                int y = Int32.Parse(matchMove.group("y"));
-                ship.setMessage(matchMove.group("message"));
+            if (matchMove.Success) {
+                int x = Int32.Parse(matchMove.Groups["x"].Value);
+                int y = Int32.Parse(matchMove.Groups["y"].Value);
+                ship.setMessage(matchMove.Groups["message"].Value);
                 ship.moveTo(x, y);
-            } else if (matchFaster.matches()) {
-                ship.setMessage(matchFaster.group("message"));
+            } else if (matchFaster.Success) {
+                ship.setMessage(matchFaster.Groups["message"].Value);
                 ship.faster();
-            } else if (matchSlower.matches()) {
-                ship.setMessage(matchSlower.group("message"));
+            } else if (matchSlower.Success) {
+                ship.setMessage(matchSlower.Groups["message"].Value);
                 ship.slower();
-            } else if (matchPort.matches()) {
-                ship.setMessage(matchPort.group("message"));
+            } else if (matchPort.Success) {
+                ship.setMessage(matchPort.Groups["message"].Value);
                 ship.port();
-            } else if (matchStarboard.matches()) {
-                ship.setMessage(matchStarboard.group("message"));
+            } else if (matchStarboard.Success) {
+                ship.setMessage(matchStarboard.Groups["message"].Value);
                 ship.starboard();
-            } else if (matchWait.matches()) {
-                ship.setMessage(matchWait.group("message"));
-            } else if (matchMine.matches()) {
-                ship.setMessage(matchMine.group("message"));
+            } else if (matchWait.Success) {
+                ship.setMessage(matchWait.Groups["message"].Value);
+            } else if (matchMine.Success) {
+                ship.setMessage(matchMine.Groups["message"].Value);
                 ship.placeMine();
-            } else if (matchFire.matches()) {
-                int x = Int32.Parse(matchFire.group("x"));
-                int y = Int32.Parse(matchFire.group("y"));
-                ship.setMessage(matchFire.group("message"));
+            } else if (matchFire.Success) {
+                int x = Int32.Parse(matchFire.Groups["x"].Value);
+                int y = Int32.Parse(matchFire.Groups["y"].Value);
+                ship.setMessage(matchFire.Groups["message"].Value);
                 ship.fire(x, y);
             } else {
                 Debug.Log("invalid action: " + line);
@@ -1134,7 +1134,7 @@ class GameManager : MonoBehaviour {
 
         ships.RemoveAll(ship => {
             if (ship.health <= 0) {
-                players.[ship.owner].shipsAlive.remove(ship);
+                players[ship.owner].shipsAlive.Remove(ship);
                 return true;
             }
             return false;
