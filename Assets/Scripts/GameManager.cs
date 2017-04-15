@@ -25,6 +25,14 @@ public class GameManager : MonoBehaviour {
 	public bool		randomSeed = true;
 	public int		seed = 42;
 	public float	timeBetweenTurns = .5f;
+	public int		timeoutMillisecs = 50;
+	public int		firstTurnTimeoutMillisecs = 1000;
+
+	[Space()]
+	[Header("View settings")]
+	public GameObject	shipPrefab;
+	public GameObject	rumBarrelPrefab;
+	public GameObject	minePrefab;
 
 	GameReferee		referee;
 
@@ -33,13 +41,35 @@ public class GameManager : MonoBehaviour {
 	const int		FIRST_PLAYER = 0;
 	const int		SECOND_PLAYER = 1;
 
-	Stream			firstPlayerOutputStream = new MemoryStream();
-	Stream			secondPlayerOutputStream = new MemoryStream();
-	Stream			firstPlayerInputStream = new MemoryStream();
-	Stream			secondPlayerInputStream = new MemoryStream();
+	EchoStream			firstPlayerInputStream = new EchoStream();
+	EchoStream			secondPlayerInputStream = new EchoStream();
+	EchoStream			firstPlayerOutputStream = new EchoStream();
+	EchoStream			secondPlayerOutputStream = new EchoStream();
+
+	Thread				firstPlayerThead;
+	Thread				secondPlayerThread;
+	
+	int					playerShipCount;
+	int					mineVisibilityRange;
+
+	GameObject[]		rumBarrelPool;
+	GameObject[]		playerShipPool;
+	GameObject[]		minePool;
+	GameObject[]		cannonBallPool;
+	
+	List< GameReferee.Player > players = new List< GameReferee.Player >();
+	List< GameReferee.Cannonball > cannonBalls = new List< GameReferee.Cannonball >();
+	List< GameReferee.Mine > mines = new List< GameReferee.Mine >();
+	List< GameReferee.RumBarrel > rumBarrels = new List< GameReferee.RumBarrel >();
+	List< GameReferee.Damage > damages = new List< GameReferee.Damage >();
 
 	// Use this for initialization
 	void Start () {
+		
+		rumBarrelPool = new GameObject[100];
+		minePool = new GameObject[100];
+		cannonBallPool = new GameObject[100];
+
 		referee = new GameReferee();
 		Properties	props = new Properties();
 		
@@ -48,76 +78,158 @@ public class GameManager : MonoBehaviour {
 //		props.put("mineCount", mineCount);
 //		props.put("barrelCount", barrelCount);
 
-		firstPlayerOutputStream.ReadTimeout = 50;
-		secondPlayerOutputStream.ReadTimeout = 50;
-
-		RunUserThread(firstPlayer, firstPlayerInputStream, firstPlayerOutputStream);
-		RunUserThread(secondPlayer, secondPlayerInputStream, secondPlayerInputStream);
+		firstPlayerThead = RunUserThread(firstPlayer, firstPlayerInputStream, firstPlayerOutputStream);
+		secondPlayerThread = RunUserThread(secondPlayer, secondPlayerInputStream, secondPlayerOutputStream);
 
 		referee.initReferee(2, props);
 
-		UpdateVisualizator(referee.getInitDataForView());
+		InitVisualizator(referee.getInitDataForView());
 
 		StartCoroutine(ExecuteRound());
 	}
 
+	void OnDestroy()
+	{
+		firstPlayerThead.Abort();
+		secondPlayerThread.Abort();
+	}
+
 	IEnumerator ExecuteRound()
 	{
-		yield return new WaitForSeconds(timeBetweenTurns);
-		string[] firstPlayerInput = referee.getInputForPlayer(round, FIRST_PLAYER);
-		string[] secondPlayerInput = referee.getInputForPlayer(round, SECOND_PLAYER);
+		while (true)
+		{
+			yield return new WaitForSeconds(timeBetweenTurns);
+			string[] firstPlayerInput = referee.getInputForPlayer(round, FIRST_PLAYER);
+			string[] secondPlayerInput = referee.getInputForPlayer(round, SECOND_PLAYER);
+	
+			var firstPlayerOutput = ExecutePlayerActions(firstPlayerInputStream, firstPlayerOutputStream, firstPlayerInput);
+			var secondPlayerOutput = ExecutePlayerActions(secondPlayerInputStream, secondPlayerOutputStream, secondPlayerInput);
+	
+			referee.handlePlayerOutput(0, round, FIRST_PLAYER, firstPlayerOutput);
+			referee.handlePlayerOutput(0, round, SECOND_PLAYER, secondPlayerOutput);
+			referee.updateGame(round);
+	
+			players.Clear();
+			cannonBalls.Clear();
+			mines.Clear();
+			rumBarrels.Clear();
+			damages.Clear();
+			referee.getFrameDataForView(players, cannonBalls, mines, rumBarrels, damages);
 
-		//TODO: call player scripts to get actions
-		var firstPlayerOutput = ExecutePlayerActions(firstPlayerOutputStream, firstPlayerInputStream, firstPlayerInput);
-		var secondPlayerOutput = ExecutePlayerActions(secondPlayerOutputStream, secondPlayerInputStream, secondPlayerInput);
-
-		referee.handlePlayerOutput(0, round, FIRST_PLAYER, firstPlayerOutput);
-		referee.handlePlayerOutput(0, round, SECOND_PLAYER, secondPlayerOutput);
-		referee.updateGame(round);
-
-		round++;
+			UpdateVisualizator();
+	
+			round++;
+		}
 	}
 
-	void		RunUserThread(Player p, Stream input, Stream output)
+	Thread		RunUserThread(Player p, EchoStream input, EchoStream output)
 	{
-		new Thread(new ThreadStart(() => {
-			StreamWriter sw = new StreamWriter(output);
-			StreamReader sr = new StreamReader(input);
-			Console.SetOut(sw);
-			Console.SetIn(sr);
-			p.PlayerMain();
+		Thread t = new Thread(new ThreadStart(() => {
+			p.PlayerMain(input, output);
 		}));
+		t.Start();
+		return t;
 	}
 
-	string[]	ExecutePlayerActions(Stream playerOutput, Stream playerInput, string[] inputs)
+	string[]	ExecutePlayerActions(EchoStream input, EchoStream output, string[] playerInputs)
 	{
-		List< string >	playerRet = new List< string >();
-		byte[]		data = new byte[1024];
+		List< string >	playerOutput = new List< string >();
 
 		//send input to user:
-		foreach (var input in inputs)
-			playerInput.Write(Encoding.ASCII.GetBytes(input), 0, 1);
+		foreach (var playerInput in playerInputs)
+			input.WriteLine(playerInput);
 
 		//user compute
 
-		//get output from user
-		while (true)
-		{
-			try {
-				playerOutput.Read(data, 0, 1);
-			} catch (TimeoutException) {
-				Debug.Log("stopping game, user take too long to response !");
-				break ;
-			}
-		}
-		return Encoding.UTF8.GetString(data).Split('\n');
+		//get output from user with timeout
+		Thread t = new Thread(new ThreadStart(() => {
+			playerOutput.Add(output.ReadLine());
+		}));
+		t.Start();
+		bool finished = t.Join((round == 0) ? firstTurnTimeoutMillisecs : timeoutMillisecs);
+		if (!finished)
+			Debug.Log("stopping game, user take too long to response !");
+
+		return playerOutput.ToArray();
 	}
 
-	void UpdateVisualizator(string[] infos)
+	void InitVisualizator(string[] infos)
 	{
-		foreach (var info in infos)
+		int		mapWidth;
+		int		mapHeight;
+
+		var datas = infos[1].Split(' ');
+		mapWidth = int.Parse(datas[0]);
+		mapHeight = int.Parse(datas[1]);
+		playerShipCount = int.Parse(datas[2]);
+		mineVisibilityRange = int.Parse(datas[3]);
+		
+		playerShipPool = new GameObject[playerShipCount * 2];
+	}
+
+	void UpdateVisualizator()
+	{
+		int		i = 0;
+		foreach (var player in players)
 		{
-			Debug.Log("info: " + info);
+			foreach (var ship in player.ships)
+			{
+				if (playerShipPool[i] == null)
+					playerShipPool[i] = Instantiate(shipPrefab);
+				playerShipPool[i].transform.position = new Vector2(ship.position.x, ship.position.y);
+				playerShipPool[i++].transform.rotation = Quaternion.Euler(0, 0, ship.orientation * 60 + 90);
+			}
+		}
+		i = 0;
+		foreach (var rumBarrel in rumBarrels)
+		{
+			if (rumBarrelPool[i] == null)
+				rumBarrelPool[i] = Instantiate(rumBarrelPrefab);
+			rumBarrelPool[i++].transform.position = new Vector2(rumBarrel.position.x, rumBarrel.position.y);
+		}
+		foreach (var mine in mines)
+		{
+			if (minePool[i] == null)
+				minePool[i] = Instantiate(minePrefab);
+			minePool[i].transform.position = new Vector2(mine.position.x, mine.position.y);
 		}
 	}
+}
+
+public class EchoStream {
+
+    private ManualResetEvent m_dataReady = new ManualResetEvent(false);
+	string	txt = null;
+	
+	public string ReadLine()
+	{
+		string	ret;
+
+		while (txt == null)
+			m_dataReady.WaitOne();
+
+		ret = txt;
+		txt = null;
+		return ret;
+	}
+
+	public void WriteLine(string s)
+	{
+		while (txt != null)
+			m_dataReady.WaitOne();
+
+		m_dataReady.Set();
+		txt = s;
+	}
+
+	/*public void Write(string s)
+	{
+		lock(m_dataReady)
+			while (txt != null)
+				m_dataReady.WaitOne();
+			
+		if (s.Contains("\n"))
+			m_dataReady.Set();
+		txt += s;
+	}*/
 }

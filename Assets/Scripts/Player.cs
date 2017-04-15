@@ -12,17 +12,19 @@ using UnityEngine;
  **/
 public class Player : MonoBehaviour
 {
-    public void PlayerMain()
+    public void PlayerMain(EchoStream input, EchoStream output)
     {
-		
+		try {
         // game loop
         while (true)
         {
-            int myShipCount = int.Parse(Console.ReadLine()); // the number of remaining ships
-            int entityCount = int.Parse(Console.ReadLine()); // the number of entities (e.g. ships, mines or cannonballs)
+            string s = input.ReadLine();
+            int myShipCount = int.Parse(s); // the number of remaining ships
+            s = input.ReadLine();
+            int entityCount = int.Parse(s); // the number of entities (e.g. ships, mines or cannonballs)
             for (int i = 0; i < entityCount; i++)
             {
-                string[] inputs = Console.ReadLine().Split(' ');
+                string[] inputs = input.ReadLine().Split(' ');
                 int entityId = int.Parse(inputs[0]);
                 string entityType = inputs[1];
                 int x = int.Parse(inputs[2]);
@@ -38,8 +40,11 @@ public class Player : MonoBehaviour
                 // Write an action using Console.WriteLine()
                 // To debug: Console.Error.WriteLine("Debug messages...");
 
-                Console.WriteLine("MOVE 11 10"); // Any valid action, such as "WAIT" or "MOVE x y"
+                output.WriteLine("MOVE 11 10"); // Any valid action, such as "WAIT" or "MOVE x y"
             }
         }
+		} catch (Exception e) {
+			Debug.LogError(e);
+		}
     }
 }

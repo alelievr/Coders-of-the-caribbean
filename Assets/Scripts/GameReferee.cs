@@ -108,10 +108,13 @@ class GameReferee {
 
     public static string join(params object[] objs)
     {
-        string ret = "";
+        string      ret = "";
 
         foreach (var obj in objs)
-            ret += obj.ToString();
+            if (obj != objs.Last())
+                ret += obj + " ";
+            else
+                ret += obj.ToString();
         return ret;
     }
 
@@ -602,7 +605,7 @@ class GameReferee {
         }
     }
 
-    private class Player {
+    public class Player {
         public int id;
         public List<Ship> ships;
         public List<Ship> shipsAlive;
@@ -1206,8 +1209,20 @@ class GameReferee {
         return data.ToArray();
     }
 
-    public String[] getFrameDataForView(int round, int frame, bool keyFrame) {
-        List<String> data = new List< String >();
+    public void getFrameDataForView(
+        List< Player > players,
+            List< Cannonball > cannonBalls,
+            List< Mine > mines,
+            List< RumBarrel > rumBarrels,
+            List< Damage > damages) {
+
+        players.AddRange(this.players);
+        cannonBalls.AddRange(this.cannonballs);
+        mines.AddRange(this.mines);
+        rumBarrels.AddRange(this.barrels);
+        damages.AddRange(this.damage);
+
+        /*List<String> data = new List< String >();
 
         foreach (Player player in players) {
             data.AddRange(player.toViewString());
@@ -1229,7 +1244,7 @@ class GameReferee {
             data.Add(d.toViewString());
         }
 
-        return data.ToArray();
+        return data.ToArray();*/
     }
 
     public String getGameName() {
