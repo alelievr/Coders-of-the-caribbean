@@ -34,8 +34,8 @@ public class HexGrid : MonoBehaviour {
 		position.x = (x + z * 0.5f - z / 2) * (HexMetrics.innerRadius * 2f);
 		position.y = z * (HexMetrics.outerRadius * 1.5f);
 		position.z = 0f;
-
-		HexCell cell = cells[i] = new HexCell(x, z, position);
+		
+		cells[i] = new HexCell(x, z, position);
 	}
 
 	void Update () {

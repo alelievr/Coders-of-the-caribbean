@@ -1,11 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading;
-using System.IO;
-using System;
+using System.Diagnostics;
 using Random = UnityEngine.Random;
-using System.Text;
+using Debug = UnityEngine.Debug;
 
 public class GameManager : MonoBehaviour {
 
@@ -172,16 +170,13 @@ public class GameManager : MonoBehaviour {
 					break ;
 			}
         }
+		
+		Stopwatch	st = new Stopwatch();
+		st.Start();
+		playerOutput = ai.PlayTurn(playerShipCount, entityCount, ships, rumBarrels, mines, cannonBalls);
+		st.Stop();
+		Debug.Log("player " + playerIndex + " AI took " + st.ElapsedMilliseconds + "ms");
 
-		Thread t = new Thread(new ThreadStart(() => {
-			playerOutput = ai.PlayTurn(playerShipCount, entityCount, ships, rumBarrels, mines, cannonBalls);
-		}));
-		t.Start();
-		bool finished = t.Join((round == 0) ? firstTurnTimeoutMillisecs : timeoutMillisecs);
-		if (!finished)
-			Debug.Log("stopping game, user take too long to response !");
-
-		Debug.Log("player: " + playerOutput);
 		return playerOutput.Split(';');
 	}
 
@@ -206,7 +201,7 @@ public class GameManager : MonoBehaviour {
 
 	Vector2	CoordToPosition(GameReferee.Coord coord)
 	{
-		return new Vector2(coord.x, coord.y) * HexMetrics.outerRadius;
+		return new Vector2(coord.x, coord.y) * HexMetrics.outerRadius + new Vector2(-4, 2.5f);
 	}
 
 	void UpdateVisualizator()
@@ -227,7 +222,7 @@ public class GameManager : MonoBehaviour {
 			{
 				if (playerShipPool[i] == null)
 					playerShipPool[i] = InstanciateShip(ship.owner);
-				playerShipPool[i].transform.position = new Vector2(ship.position.x, ship.position.y);
+				playerShipPool[i].transform.position = CoordToPosition(ship.position);
 				playerShipPool[i].transform.rotation = Quaternion.Euler(0, 0, ship.orientation * 60 + 90);
 				playerShipPool[i].SetActive(true);
 				i++;
