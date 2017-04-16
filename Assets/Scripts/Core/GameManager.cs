@@ -34,9 +34,9 @@ public class GameManager : MonoBehaviour {
 	public GameObject	cannonBallPrefab;
 	public GameObject	cannonShootPrefab;
 
-	GameReferee		referee;
-	HexGrid			hexGrid;
-	PlayerGUI		playerGUI;
+	GameReferee				referee;
+	static HexGrid			hexGrid;
+	static PlayerGUI		playerGUI;
 
 	int				round = 0;
 
@@ -273,7 +273,7 @@ public class GameManager : MonoBehaviour {
 				g.transform.position = CoordToPosition(ship.position);
 				g.transform.rotation = Quaternion.Euler(0, 0, ship.orientation * 60 + 90);
 				i++;
-				playerGUI.UpdatePlayerShipHealth(ship.owner, ship.id, ship.health);
+				playerGUI.UpdatePlayerShipHealth(ship.owner, shipsPerPlayer, ship.id, ship.health);
 			}
 		}
 		i = 0;
@@ -303,7 +303,6 @@ public class GameManager : MonoBehaviour {
 		}
 		foreach (var damage in damages)
 		{
-			Debug.Log("EXPLOSION");
 			GameObject g = Instantiate(explosionPrefab, CoordToPosition(damage.position), Quaternion.identity);
 			Destroy(g, 1);
 		}
@@ -315,5 +314,19 @@ public class GameManager : MonoBehaviour {
 	public void InstanciateAnimation(int x, int y, GameManager anim)
 	{
 		GameObject.Instantiate(anim, new Vector2(x, y), Quaternion.identity);
+	}
+
+	//Player access:
+
+	public static void SetCellText(int x, int y, string text)
+	{
+		if (hexGrid != null)
+			hexGrid.SetCellText(x, y, text);
+	}
+
+	public static void SetCellColor(int x, int y, Color c)
+	{
+		if (hexGrid != null)
+			hexGrid.SetCellColor(x, y, c);
 	}
 }

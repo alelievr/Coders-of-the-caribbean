@@ -23,6 +23,8 @@ public class MyAI : PlayerAI {
 				ret += ";";
 		}
 
+		GameManager.SetCellText(3, 3, "olol");
+
 		return ret;
 	}
 

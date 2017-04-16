@@ -791,7 +791,7 @@ class GameReferee {
             Match matchMine = PLAYER_INPUT_MINE_PATTERN.Match(line);
             if (i >= player.shipsAlive.Count)
             {
-                Debug.Log("unexecuted action: only one action by ship is allowed ! [" + line + "]");
+                // Debug.Log("unexecuted action: only one action by ship is allowed ! [" + line + "]");
                 break ;
             }
             Ship ship = player.shipsAlive[i++];
@@ -931,7 +931,6 @@ class GameReferee {
         barrels.RemoveAll(barrel => {
             if (barrel.position.equals(bow) || barrel.position.equals(stern) || barrel.position.equals(center)) {
                 ship.heal(barrel.health);
-                Debug.Log("RUM COLLISION !");
                 return true;
             }
             return false;
@@ -943,7 +942,6 @@ class GameReferee {
 
             if (!(mineDamage.Count == 0)) {
                 damage.AddRange(mineDamage);
-                Debug.Log("MINE COLLISION !");
                 return true;
             }
             return false;

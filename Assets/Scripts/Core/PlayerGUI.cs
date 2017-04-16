@@ -12,7 +12,7 @@ public class PlayerGUI : MonoBehaviour {
 	public Image[]	redShipHealthImages;
 	public Text[]	redShipHealthTexts;
 
-	public void UpdatePlayerShipHealth(int player, int shipId, int health)
+	public void UpdatePlayerShipHealth(int player, int shipPerPlayer, int shipId, int health)
 	{
 		if (player == 0)
 		{
@@ -21,8 +21,8 @@ public class PlayerGUI : MonoBehaviour {
 		}
 		else
 		{
-			redShipHealthImages[shipId].fillAmount = (health / 100f);
-			redShipHealthTexts[shipId].text = health.ToString();
+			redShipHealthImages[shipId - player * shipPerPlayer].fillAmount = (health / 100f);
+			redShipHealthTexts[shipId - player * shipPerPlayer].text = health.ToString();
 		}
 	}
 }
