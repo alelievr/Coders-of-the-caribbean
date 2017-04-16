@@ -708,7 +708,7 @@ class GameReferee {
             this.ships.Concat(ships);
 
         // Generate mines
-        mines = new List< Mine >();
+       /* mines = new List< Mine >();
         while (mines.Count < mineCount) {
             int x = 1 + Random.Range(0, MAP_WIDTH - 2);
             int y = 1 + Random.Range(0, MAP_HEIGHT / 2);
@@ -728,11 +728,17 @@ class GameReferee {
                 mines.Add(m);
             }
         }
-        mineCount = mines.Count;
+        mineCount = mines.Count;*/
 
         // Generate supplies
         barrels = new List< RumBarrel >();
-        while (barrels.Count < barrelCount) {
+        mines = new List< Mine >();
+        mineCount = 0;
+        for (int x = 0; x < 22; x++)
+            for (int y = 0; y < 20; y++)
+                if (x == 0 || x == 21 || y == 0 || y == 19)
+                barrels.Add(new RumBarrel(x, y, 10));
+        /*while (barrels.Count < barrelCount) {
             int x = 1 + Random.Range(0, MAP_WIDTH - 2);
             int y = 1 + Random.Range(0, MAP_HEIGHT / 2);
             int h = MIN_RUM_BARREL_VALUE + Random.Range(0, 1 + MAX_RUM_BARREL_VALUE - MIN_RUM_BARREL_VALUE);
@@ -757,7 +763,7 @@ class GameReferee {
                 }
                 barrels.Add(m);
             }
-        }
+        }*/
 
     }
 

@@ -5,15 +5,18 @@ using UnityEngine.UI;
 
 public class HexGrid : MonoBehaviour {
 
-    public int width = 22;
-    public int height = 20;
+    int width;
+    int height;
 
     public HexCell	cellPrefab;
 
     HexCell[]		cells;
     HexMesh			hexMesh;
 
-	void Awake () {
+	public void BuildHexMap (int width, int height) {
+		this.width = width;
+		this.height = height;
+		
 		cells = new HexCell[height * width];
 
         hexMesh = GetComponentInChildren<HexMesh>();
@@ -23,13 +26,11 @@ public class HexGrid : MonoBehaviour {
 				CreateCell(x, z, i++);
 			}
 		}
-	}
-
-	void Start () {
 		hexMesh.Triangulate(cells);
 	}
-	
+
 	void CreateCell (int x, int z, int i) {
+		Debug.Log("created cell at: " + x + "/" + z);
 		Vector3 position;
 		position.x = (x + z * 0.5f - z / 2) * (HexMetrics.innerRadius * 2f);
 		position.y = z * (HexMetrics.outerRadius * 1.5f);

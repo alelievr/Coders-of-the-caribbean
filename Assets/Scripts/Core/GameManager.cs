@@ -35,8 +35,13 @@ public class GameManager : MonoBehaviour {
 	public GameObject	cannonShootPrefab;
 
 	GameReferee		referee;
+	HexGrid			hexGrid;
 
 	int				round = 0;
+
+	public Vector2	decal;
+	public float	scaleX;
+	public float	scaleY;
 
 	const int		FIRST_PLAYER = 0;
 	const int		SECOND_PLAYER = 1;
@@ -65,9 +70,11 @@ public class GameManager : MonoBehaviour {
 	void Start () {
 		referee = new GameReferee();
 		
-		rumBarrelPool = new GameObject[GameReferee.MAX_RUM_BARRELS];
+		rumBarrelPool = new GameObject[GameReferee.MAX_RUM_BARRELS * 20];
 		minePool = new GameObject[GameReferee.MAX_MINES * 2];
 		cannonBallPool = new GameObject[GameReferee.MAX_SHIPS * 2];
+
+		hexGrid = FindObjectOfType< HexGrid >();
 
 		LoadResources();
 
@@ -188,6 +195,8 @@ public class GameManager : MonoBehaviour {
 		playerShipCount = int.Parse(datas[2]);
 		mineVisibilityRange = int.Parse(datas[3]);
 		
+		hexGrid.BuildHexMap(mapWidth - 1, mapHeight - 1);
+
 		playerShipPool = new GameObject[playerShipCount * 2];
 	}
 
@@ -199,9 +208,15 @@ public class GameManager : MonoBehaviour {
 			return Instantiate(redShips[Random.Range(0, redShips.Length)]);
 	}
 
-	Vector2	CoordToPosition(GameReferee.Coord coord)
+	Vector2	CoordToPosition(GameReferee.Coord position)
 	{
-		return new Vector2(coord.x, coord.y) * HexMetrics.outerRadius + new Vector2(-4, 2.5f);
+		Vector2 pos = new Vector2(position.x, position.y) * HexMetrics.outerRadius;
+
+		pos.x += ((position.y % 2) * HexMetrics.outerRadius) / 2f;
+		pos.x *= scaleX;
+		pos.y *= scaleY;
+
+		return (pos) + decal;
 	}
 
 	void UpdateVisualizator()
