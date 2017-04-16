@@ -57,9 +57,9 @@ public class GameManager : MonoBehaviour {
 
 	//TODO: remove these pools
 	GameObjectPool		rumBarrelPool;
-	GameObjectPool		playerShipPool;
 	GameObjectPool		minePool;
 	GameObjectPool		cannonBallPool;
+	GameObject[]		playerShips;
 
 	GameObject[]		orangeShips;
 	GameObject[]		redShips;
@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour {
 		rumBarrelPool = new GameObjectPool(GameReferee.MAX_RUM_BARRELS * 2);
 		minePool = new GameObjectPool(GameReferee.MAX_MINES * 2);
 		cannonBallPool = new GameObjectPool(GameReferee.MAX_SHIPS * 2);
+		playerShips = new GameObject[shipsPerPlayer * 2];
 
 		hexGrid = FindObjectOfType< HexGrid >();
 		playerGUI = FindObjectOfType< PlayerGUI >();
@@ -93,6 +94,7 @@ public class GameManager : MonoBehaviour {
 		referee.initReferee(2, props);
 
 		InitVisualizator(referee.getInitDataForView());
+		UpdateView();
 
 		StartCoroutine(ExecuteRound());
 	}
@@ -116,22 +118,21 @@ public class GameManager : MonoBehaviour {
 		{
 			yield return new WaitForSeconds(timeBetweenTurns);
 	
+			referee.prepare(round);
+
+			//execute players AI
 			var firstPlayerOutput = ExecutePlayerActions(firstPlayer, FIRST_PLAYER);
 			var secondPlayerOutput = ExecutePlayerActions(secondPlayer, SECOND_PLAYER);
 	
+			//send result to the referee
 			referee.handlePlayerOutput(0, round, FIRST_PLAYER, firstPlayerOutput);
 			referee.handlePlayerOutput(0, round, SECOND_PLAYER, secondPlayerOutput);
+
+			//update game status
 			referee.updateGame(round);
 	
-			//View Update:
-			players.Clear();
-			cannonBalls.Clear();
-			mines.Clear();
-			rumBarrels.Clear();
-			damages.Clear();
-			referee.getFrameDataForView(players, cannonBalls, mines, rumBarrels, damages);
-
-			UpdateVisualizator();
+			//update view
+			UpdateView();
 	
 			round++;
 		}
@@ -201,8 +202,6 @@ public class GameManager : MonoBehaviour {
 		mineVisibilityRange = int.Parse(datas[3]);
 		
 		hexGrid.BuildHexMap(mapWidth - 1, mapHeight - 1);
-
-		playerShipPool = new GameObjectPool(playerShipCount * 2);
 	}
 
 	GameObject InstanciateShip(int owner, int id)
@@ -210,7 +209,7 @@ public class GameManager : MonoBehaviour {
 		if (owner == 0)
 			return Instantiate(orangeShips[id]);
 		else
-			return Instantiate(redShips[id]);
+			return Instantiate(redShips[id - shipsPerPlayer]);
 	}
 
 	Vector2	CoordToPosition(GameReferee.Coord position)
@@ -223,12 +222,40 @@ public class GameManager : MonoBehaviour {
 
 		return (pos) + decal;
 	}
+	
+	void UpdateView()
+	{
+		players.Clear();
+		cannonBalls.Clear();
+		mines.Clear();
+		rumBarrels.Clear();
+		damages.Clear();
+		referee.getFrameDataForView(players, cannonBalls, mines, rumBarrels, damages);
+
+		UpdateVisualizator();
+
+		//TODO: save old player ships
+	}
+
+	IEnumerator fadeAndDestroy(GameObject g, int shipId)
+	{
+		SpriteRenderer sp = g.GetComponent< SpriteRenderer >();
+		SpriteRenderer sailSp = g.GetComponentInChildren< SpriteRenderer >();
+		playerShips[shipId] = null;
+
+		for (int i = 0; i < 10; i++)
+		{
+			sp.color = new Color(1f, 1f, 1f, Mathf.SmoothStep(1f, 0f, (float)i / 10f));
+			sailSp.color = new Color(1f, 1f, 1f, Mathf.SmoothStep(1f, 0f, (float)i / 10f));
+			yield return new WaitForSeconds(0.16f);
+		}
+		Destroy(g);
+	}
 
 	void UpdateVisualizator()
 	{
 		int		i = 0;
 
-		playerShipPool.SetUpdated(false);
 		minePool.SetUpdated(false);
 		rumBarrelPool.SetUpdated(false);
 
@@ -236,12 +263,15 @@ public class GameManager : MonoBehaviour {
 		{
 			foreach (var ship in player.ships)
 			{
-				GameObject g;
-				if ((g = playerShipPool.Get(i)) == null)
-					g = playerShipPool.Set(InstanciateShip(ship.owner, ship.id), i);
+				GameObject g = playerShips[ship.id];
+				if (ship.health <= 0 && g != null)
+					StartCoroutine(fadeAndDestroy(g, ship.id));
+				if (ship.health <= 0)
+					continue ;
+				if (g == null)
+					g = playerShips[ship.id] = InstanciateShip(ship.owner, ship.id);
 				g.transform.position = CoordToPosition(ship.position);
 				g.transform.rotation = Quaternion.Euler(0, 0, ship.orientation * 60 + 90);
-				playerShipPool.Update(i);
 				i++;
 				playerGUI.UpdatePlayerShipHealth(ship.owner, ship.id, ship.health);
 			}
@@ -273,11 +303,11 @@ public class GameManager : MonoBehaviour {
 		}
 		foreach (var damage in damages)
 		{
+			Debug.Log("EXPLOSION");
 			GameObject g = Instantiate(explosionPrefab, CoordToPosition(damage.position), Quaternion.identity);
 			Destroy(g, 1);
 		}
 
-		playerShipPool.RemoveUnused(() => {});
 		rumBarrelPool.RemoveUnused(() => {});
 		minePool.RemoveUnused(() => {});
 	}

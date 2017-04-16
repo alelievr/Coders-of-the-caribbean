@@ -12,10 +12,16 @@ public class MyAI : PlayerAI {
 		List< MineData > mines,
 		List< CannonBallData > cannonBalls)
 	{
-		string	ret = "WAIT";
+		string	ret = "";
 
-		foreach (var ship in ships.Where(s => s.owner == 0))
-			ret += ";MOVE " + Random.Range(0, 22) + " " + Random.Range(0, 20);
+		var myShips = ships.Where(s => s.owner == 0 && s.health > 0);
+
+		foreach (var ship in myShips)
+		{
+			ret += "MOVE " + Random.Range(0, 22) + " " + Random.Range(0, 20) + ship;
+			if (ship != myShips.Last())
+				ret += ";";
+		}
 
 		return ret;
 	}

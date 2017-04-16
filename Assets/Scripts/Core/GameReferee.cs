@@ -176,7 +176,7 @@ class GameReferee {
 
 
         public bool equals(object obj) {
-            if (obj == null || GetHashCode() != obj.GetHashCode()) {
+            if (obj == null || obj.GetType() != typeof(Coord)) {
                 return false;
             }
             Coord other = (Coord) obj;
@@ -186,6 +186,11 @@ class GameReferee {
 
         public String toString() {
             return join(x, y);
+        }
+
+        public override string ToString()
+        {
+            return "(" + x + ", " + y + ")";
         }
     }
 
@@ -704,7 +709,7 @@ class GameReferee {
 
         this.ships.Clear();
         foreach (var ships in players.Select(p => p.ships))
-            this.ships.Concat(ships);
+            this.ships = this.ships.Concat(ships).ToList();
 
         // Generate mines
        mines = new List< Mine >();
@@ -784,7 +789,11 @@ class GameReferee {
             Match matchStarboard = PLAYER_INPUT_STARBOARD_PATTERN.Match(line);
             Match matchFire = PLAYER_INPUT_FIRE_PATTERN.Match(line);
             Match matchMine = PLAYER_INPUT_MINE_PATTERN.Match(line);
-            Debug.Log("i = " + i);
+            if (i >= player.shipsAlive.Count)
+            {
+                Debug.Log("unexecuted action: only one action by ship is allowed ! [" + line + "]");
+                break ;
+            }
             Ship ship = player.shipsAlive[i++];
 
             if (matchMove.Success) {
@@ -917,10 +926,12 @@ class GameReferee {
         Coord stern = ship.stern();
         Coord center = ship.position;
 
+        if (ship.id == 0)
         // Collision with the barrels
         barrels.RemoveAll(barrel => {
             if (barrel.position.equals(bow) || barrel.position.equals(stern) || barrel.position.equals(center)) {
                 ship.heal(barrel.health);
+                Debug.Log("RUM COLLISION !");
                 return true;
             }
             return false;
@@ -932,6 +943,7 @@ class GameReferee {
 
             if (!(mineDamage.Count == 0)) {
                 damage.AddRange(mineDamage);
+                Debug.Log("MINE COLLISION !");
                 return true;
             }
             return false;
