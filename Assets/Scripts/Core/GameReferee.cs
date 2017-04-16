@@ -93,7 +93,7 @@ class GameReferee {
         }
     }
 
-    private static  Regex PLAYER_INPUT_MOVE_PATTERN = new Regex("MOVE (?<x>[0-9]{1,8})\\s+(?<y>[0-9]{1,8})(?:\\s+(?<message>.+))?", RegexOptions.IgnoreCase);
+    private static  Regex PLAYER_INPUT_MOVE_PATTERN = new Regex("MOVE (?<x>-?[0-9]{1,8})\\s+(?<y>-?[0-9]{1,8})(?:\\s+(?<message>.+))?", RegexOptions.IgnoreCase);
     private static  Regex PLAYER_INPUT_SLOWER_PATTERN = new Regex("SLOWER(?:\\s+(?<message>.+))?", RegexOptions.IgnoreCase);
     private static  Regex PLAYER_INPUT_FASTER_PATTERN = new Regex("FASTER(?:\\s+(?<message>.+))?", RegexOptions.IgnoreCase);
     private static  Regex PLAYER_INPUT_WAIT_PATTERN = new Regex("WAIT(?:\\s+(?<message>.+))?", RegexOptions.IgnoreCase);
@@ -361,6 +361,7 @@ class GameReferee {
         public int orientation;
         public int speed;
         public int health;
+        public int initialHealth;
         public int owner;
         public String message;
         public Action? action;
@@ -649,7 +650,6 @@ class GameReferee {
     private List<Player> players;
     private List<Ship> ships = new List< Ship >();
     private List<Damage> damage;
-    private List<Ship> shipLosts;
     private List<Coord> cannonBallExplosions;
     private int shipsPerPlayer;
     private int mineCount;
@@ -678,7 +678,6 @@ class GameReferee {
         cannonballs = new List< Cannonball >();
         cannonBallExplosions = new List< Coord >();
         damage = new List< Damage >();
-        shipLosts = new List< Ship >();
 
         // Generate Players
         this.players = new List<Player>(playerCount);
@@ -708,63 +707,44 @@ class GameReferee {
             this.ships.Concat(ships);
 
         // Generate mines
-       /* mines = new List< Mine >();
+       mines = new List< Mine >();
         while (mines.Count < mineCount) {
             int x = 1 + Random.Range(0, MAP_WIDTH - 2);
             int y = 1 + Random.Range(0, MAP_HEIGHT / 2);
 
             Mine m = new Mine(x, y);
-            bool valid = true;
-            foreach (Ship ship in this.ships) {
-                if (ship.at(m.position)) {
-                    valid = false;
-                    break;
-                }
-            }
-            if (valid) {
+            bool cellIsFreeOfMines = !mines.Any(mine => mine.position.equals(m.position));
+            bool cellIsFreeOfShips = !ships.Any(ship => ship.at(m.position));
+ 
+             if (cellIsFreeOfShips && cellIsFreeOfMines) {
                 if (y != MAP_HEIGHT - 1 - y) {
                     mines.Add(new Mine(x, MAP_HEIGHT - 1 - y));
                 }
                 mines.Add(m);
             }
         }
-        mineCount = mines.Count;*/
+        mineCount = mines.Count;
 
         // Generate supplies
         barrels = new List< RumBarrel >();
-        mines = new List< Mine >();
-        mineCount = 0;
-        for (int x = 0; x < 22; x++)
-            for (int y = 0; y < 20; y++)
-                if (x == 0 || x == 21 || y == 0 || y == 19)
-                barrels.Add(new RumBarrel(x, y, 10));
-        /*while (barrels.Count < barrelCount) {
+        while (barrels.Count < barrelCount) {
             int x = 1 + Random.Range(0, MAP_WIDTH - 2);
             int y = 1 + Random.Range(0, MAP_HEIGHT / 2);
             int h = MIN_RUM_BARREL_VALUE + Random.Range(0, 1 + MAX_RUM_BARREL_VALUE - MIN_RUM_BARREL_VALUE);
 
             RumBarrel m = new RumBarrel(x, y, h);
-            bool valid = true;
-            foreach (Ship ship in this.ships) {
-                if (ship.at(m.position)) {
-                    valid = false;
-                    break;
-                }
-            }
-            foreach (Mine mine in this.mines) {
-                if (mine.position.equals(m.position)) {
-                    valid = false;
-                    break;
-                }
-            }
-            if (valid) {
+            bool cellIsFreeOfBarrels = !barrels.Any(barrel => barrel.position.equals(m.position));
+            bool cellIsFreeOfMines = !mines.Any(mine => mine.position.equals(m.position));
+            bool cellIsFreeOfShips = !ships.Any(ship => ship.at(m.position));
+ 
+             if (cellIsFreeOfShips && cellIsFreeOfMines && cellIsFreeOfBarrels) {
                 if (y != MAP_HEIGHT - 1 - y) {
                     barrels.Add(new RumBarrel(x, MAP_HEIGHT - 1 - y, h));
                 }
                 barrels.Add(m);
             }
-        }*/
-
+        }
+        barrelCount = barrels.Count;
     }
 
     public Properties getConfiguration() {
@@ -785,7 +765,6 @@ class GameReferee {
         }
         cannonBallExplosions.Clear();
         damage.Clear();
-        shipLosts.Clear();
     }
 
     public int getExpectedOutputLineCountForPlayer(int playerIdx) {
@@ -805,6 +784,7 @@ class GameReferee {
             Match matchStarboard = PLAYER_INPUT_STARBOARD_PATTERN.Match(line);
             Match matchFire = PLAYER_INPUT_FIRE_PATTERN.Match(line);
             Match matchMine = PLAYER_INPUT_MINE_PATTERN.Match(line);
+            Debug.Log("i = " + i);
             Ship ship = player.shipsAlive[i++];
 
             if (matchMove.Success) {
@@ -844,6 +824,12 @@ class GameReferee {
     private void decrementRum() {
         foreach (Ship ship in ships) {
             ship.damage(1);
+        }
+    }
+
+    private void updateInitialRum() {
+        foreach (Ship ship in ships) {
+            ship.initialHealth = ship.health;
         }
     }
 
@@ -898,9 +884,10 @@ class GameReferee {
 
                             if (target.isInsideMap()) {
                                 bool cellIsFreeOfBarrels = !barrels.Any(b => b.position.equals(target));
+                                bool cellIsFreeOfMines = !mines.Any(mine => mine.position.equals(target));
                                 bool cellIsFreeOfShips = !ships.Any(s => s != ship && s.at(target));
 
-                                if (cellIsFreeOfBarrels && cellIsFreeOfShips) {
+                                if (cellIsFreeOfBarrels && cellIsFreeOfShips && cellIsFreeOfMines) {
                                     ship.mineCooldown = COOLDOWN_MINE;
                                     Mine mine = new Mine(target.x, target.y);
                                     mines.Add(mine);
@@ -912,7 +899,7 @@ class GameReferee {
                     case Action.FIRE:
                         int distance = ship.bow().distanceTo(ship.target);
                         if (ship.target.isInsideMap() && distance <= FIRE_DISTANCE_MAX && ship.cannonCooldown == 0) {
-                            int travelTime = 1 + Mathf.RoundToInt(ship.bow().distanceTo(ship.target) / 3);
+                            int travelTime = (int)(1 + Mathf.RoundToInt(ship.bow().distanceTo(ship.target) / 3f));
                             cannonballs.Add(new Cannonball(ship.target.x, ship.target.y, ship.id, ship.bow().x, ship.bow().y, travelTime));
                             ship.cannonCooldown = COOLDOWN_CANNON;
                         }
@@ -925,7 +912,7 @@ class GameReferee {
         }
     }
 
-    private bool checkCollisions(Ship ship) {
+    private void checkCollisions(Ship ship) {
         Coord bow = ship.bow();
         Coord stern = ship.stern();
         Coord center = ship.position;
@@ -949,8 +936,6 @@ class GameReferee {
             }
             return false;
         });
-
-        return ship.health <= 0;
     }
 
     private void moveShips() {
@@ -1010,14 +995,8 @@ class GameReferee {
 
             foreach (Player player in players) {
                 foreach (Ship ship in player.shipsAlive) {
-                    if (ship.health == 0) {
-                        continue;
-                    }
-
                     ship.position = ship.newPosition;
-                    if (checkCollisions(ship)) {
-                        shipLosts.Add(ship);
-                    }
+                    checkCollisions(ship);
                 }
             }
         }
@@ -1059,14 +1038,8 @@ class GameReferee {
         // Apply rotation
         foreach (Player player in players) {
             foreach (Ship ship in player.shipsAlive) {
-                if (ship.health == 0) {
-                    continue;
-                }
-
                 ship.orientation = ship.newOrientation;
-                if (checkCollisions(ship)) {
-                    shipLosts.Add(ship);
-                }
+                checkCollisions(ship);
             }
         }
     }
@@ -1124,6 +1097,7 @@ class GameReferee {
     public void updateGame(int round) {
         moveCannonballs();
         decrementRum();
+        updateInitialRum();
 
         applyActions();
         moveShips();
@@ -1133,8 +1107,14 @@ class GameReferee {
         explodeMines();
         explodeBarrels();
 
-        foreach (Ship ship in shipLosts) {
-            barrels.Add(new RumBarrel(ship.position.x, ship.position.y, REWARD_RUM_BARREL_VALUE));
+        foreach (Ship ship in ships) {
+            if (ship.health <= 0) {
+                int reward = Mathf.Min(REWARD_RUM_BARREL_VALUE, ship.initialHealth);
+                if (reward > 0)
+                {
+                    barrels.Add(new RumBarrel(ship.position.x, ship.position.y, reward));
+                }
+            }
         }
 
         foreach (Coord position in cannonBallExplosions) {
@@ -1181,7 +1161,7 @@ class GameReferee {
         // Visible mines
         foreach (Mine mine in mines) {
             bool visible = false;
-            foreach (Ship ship in players[playerIdx].ships) {
+            foreach (Ship ship in players[playerIdx].shipsAlive) {
                 if (ship.position.distanceTo(mine.position) <= MINE_VISIBILITY_RANGE) {
                     visible = true;
                     break;

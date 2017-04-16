@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class MyAI : PlayerAI {
 
@@ -11,7 +12,12 @@ public class MyAI : PlayerAI {
 		List< MineData > mines,
 		List< CannonBallData > cannonBalls)
 	{
-		return "MOVE " + Random.Range(0, 22) + " " + Random.Range(0, 20);
+		string	ret = "WAIT";
+
+		foreach (var ship in ships.Where(s => s.owner == 0))
+			ret += ";MOVE " + Random.Range(0, 22) + " " + Random.Range(0, 20);
+
+		return ret;
 	}
 
 }
