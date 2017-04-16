@@ -1,0 +1,1212 @@
+fileFormatVersion: 2
+guid: fd6395c30aced4d41a224199a1b1f9d1
+timeCreated: 1492295594
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: boat_orange_0
+    21300002: boat_orange_1
+    21300004: boat_orange_2
+    21300006: boat_orange_3
+    21300008: boat_orange_4
+    21300010: boat_orange_5
+    21300012: boat_orange_6
+    21300014: boat_orange_7
+    21300016: boat_orange_8
+    21300018: boat_orange_9
+    21300020: boat_orange_10
+    21300022: boat_orange_11
+    21300024: boat_orange_12
+    21300026: boat_orange_13
+    21300028: boat_orange_14
+    21300030: boat_orange_15
+    21300032: boat_orange_16
+    21300034: boat_orange_17
+    21300036: boat_orange_18
+    21300038: boat_orange_19
+    21300040: boat_orange_20
+    21300042: boat_orange_21
+    21300044: boat_orange_22
+    21300046: boat_orange_23
+    21300048: boat_orange_24
+    21300050: boat_orange_25
+    21300052: boat_orange_26
+    21300054: boat_orange_27
+    21300056: boat_orange_28
+    21300058: boat_orange_29
+    21300060: boat_orange_30
+    21300062: boat_orange_31
+    21300064: boat_orange_32
+    21300066: boat_orange_33
+    21300068: boat_orange_34
+    21300070: boat_orange_35
+    21300072: boat_orange_36
+    21300074: boat_orange_37
+    21300076: boat_orange_38
+    21300078: boat_orange_39
+    21300080: boat_orange_40
+    21300082: boat_orange_41
+    21300084: boat_orange_42
+    21300086: boat_orange_43
+    21300088: boat_orange_44
+    21300090: boat_orange_45
+    21300092: boat_orange_46
+    21300094: boat_orange_47
+    21300096: boat_orange_48
+    21300098: boat_orange_49
+    21300100: boat_orange_50
+    21300102: boat_orange_51
+    21300104: boat_orange_52
+    21300106: boat_orange_53
+    21300108: boat_orange_54
+    21300110: boat_orange_55
+    21300112: boat_orange_56
+    21300114: boat_orange_57
+    21300116: boat_orange_58
+    21300118: boat_orange_59
+    21300120: boat_orange_60
+    21300122: boat_orange_61
+    21300124: boat_orange_62
+    21300126: boat_orange_63
+    21300128: boat_orange_64
+    21300130: boat_orange_65
+    21300132: boat_orange_66
+    21300134: boat_orange_67
+    21300136: boat_orange_68
+    21300138: boat_orange_69
+    21300140: boat_orange_70
+    21300142: boat_orange_71
+    21300144: boat_orange_72
+    21300146: boat_orange_73
+    21300148: boat_orange_74
+    21300150: boat_orange_75
+    21300152: boat_orange_76
+    21300154: boat_orange_77
+    21300156: boat_orange_78
+    21300158: boat_orange_79
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: boat_orange_0
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 1869
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_1
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 1812
+        width: 87
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_2
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 1815
+        width: 85
+        height: 143
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_3
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 1816
+        width: 84
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_4
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 1869
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_5
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 1869
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_6
+      rect:
+        serializedVersion: 2
+        x: 1407
+        y: 1869
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_7
+      rect:
+        serializedVersion: 2
+        x: 1630
+        y: 1869
+        width: 69
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_8
+      rect:
+        serializedVersion: 2
+        x: 1854
+        y: 1869
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_9
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 1590
+        width: 87
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_10
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 1590
+        width: 87
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_11
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 1594
+        width: 85
+        height: 141
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_12
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 1594
+        width: 84
+        height: 141
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_13
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 1647
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_14
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 1647
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_15
+      rect:
+        serializedVersion: 2
+        x: 1407
+        y: 1647
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_16
+      rect:
+        serializedVersion: 2
+        x: 1629
+        y: 1647
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_17
+      rect:
+        serializedVersion: 2
+        x: 1854
+        y: 1647
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_18
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 1368
+        width: 87
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_19
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 1370
+        width: 87
+        height: 145
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_20
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 1372
+        width: 85
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_21
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 1371
+        width: 84
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_22
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 1425
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_23
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 1425
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_24
+      rect:
+        serializedVersion: 2
+        x: 1407
+        y: 1425
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_25
+      rect:
+        serializedVersion: 2
+        x: 1629
+        y: 1425
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_26
+      rect:
+        serializedVersion: 2
+        x: 1854
+        y: 1425
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_27
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 1150
+        width: 84
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_28
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 1150
+        width: 84
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_29
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 1150
+        width: 84
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_30
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 1148
+        width: 85
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_31
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 1203
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_32
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 1203
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_33
+      rect:
+        serializedVersion: 2
+        x: 1408
+        y: 1203
+        width: 69
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_34
+      rect:
+        serializedVersion: 2
+        x: 1629
+        y: 1203
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_35
+      rect:
+        serializedVersion: 2
+        x: 1853
+        y: 1203
+        width: 67
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_36
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 926
+        width: 87
+        height: 145
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_37
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 925
+        width: 87
+        height: 147
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_38
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 924
+        width: 87
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_39
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 924
+        width: 87
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_40
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 981
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_41
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 981
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_42
+      rect:
+        serializedVersion: 2
+        x: 1409
+        y: 981
+        width: 67
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_43
+      rect:
+        serializedVersion: 2
+        x: 1629
+        y: 981
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_44
+      rect:
+        serializedVersion: 2
+        x: 1852
+        y: 981
+        width: 69
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_45
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 759
+        width: 69
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_46
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 759
+        width: 67
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_47
+      rect:
+        serializedVersion: 2
+        x: 521
+        y: 759
+        width: 66
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_48
+      rect:
+        serializedVersion: 2
+        x: 744
+        y: 759
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_49
+      rect:
+        serializedVersion: 2
+        x: 966
+        y: 759
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_50
+      rect:
+        serializedVersion: 2
+        x: 1187
+        y: 759
+        width: 67
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_51
+      rect:
+        serializedVersion: 2
+        x: 1409
+        y: 759
+        width: 66
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_52
+      rect:
+        serializedVersion: 2
+        x: 1629
+        y: 759
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_53
+      rect:
+        serializedVersion: 2
+        x: 1851
+        y: 759
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_54
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 537
+        width: 69
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_55
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 537
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_56
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 537
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_57
+      rect:
+        serializedVersion: 2
+        x: 741
+        y: 537
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_58
+      rect:
+        serializedVersion: 2
+        x: 954
+        y: 480
+        width: 87
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_59
+      rect:
+        serializedVersion: 2
+        x: 1185
+        y: 537
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_60
+      rect:
+        serializedVersion: 2
+        x: 1410
+        y: 537
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_61
+      rect:
+        serializedVersion: 2
+        x: 1629
+        y: 537
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_62
+      rect:
+        serializedVersion: 2
+        x: 1851
+        y: 537
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_63
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 315
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_64
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 315
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_65
+      rect:
+        serializedVersion: 2
+        x: 522
+        y: 315
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_66
+      rect:
+        serializedVersion: 2
+        x: 744
+        y: 315
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_67
+      rect:
+        serializedVersion: 2
+        x: 966
+        y: 315
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_68
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 315
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_69
+      rect:
+        serializedVersion: 2
+        x: 1409
+        y: 315
+        width: 67
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_70
+      rect:
+        serializedVersion: 2
+        x: 1629
+        y: 315
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_71
+      rect:
+        serializedVersion: 2
+        x: 1851
+        y: 315
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_72
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 93
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_73
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 93
+        width: 69
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_74
+      rect:
+        serializedVersion: 2
+        x: 521
+        y: 93
+        width: 67
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_75
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 93
+        width: 66
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_76
+      rect:
+        serializedVersion: 2
+        x: 966
+        y: 93
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_77
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 93
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_78
+      rect:
+        serializedVersion: 2
+        x: 1410
+        y: 93
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_orange_79
+      rect:
+        serializedVersion: 2
+        x: 1632
+        y: 93
+        width: 64
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

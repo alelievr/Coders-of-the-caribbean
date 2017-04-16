@@ -1,0 +1,1492 @@
+fileFormatVersion: 2
+guid: f38e8d05195fe40bb911f050ffa6c53c
+timeCreated: 1492295621
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: boat_red_0
+    21300002: boat_red_1
+    21300004: boat_red_2
+    21300006: boat_red_3
+    21300008: boat_red_4
+    21300010: boat_red_5
+    21300012: boat_red_6
+    21300014: boat_red_7
+    21300016: boat_red_8
+    21300018: boat_red_9
+    21300020: boat_red_10
+    21300022: boat_red_11
+    21300024: boat_red_12
+    21300026: boat_red_13
+    21300028: boat_red_14
+    21300030: boat_red_15
+    21300032: boat_red_16
+    21300034: boat_red_17
+    21300036: boat_red_18
+    21300038: boat_red_19
+    21300040: boat_red_20
+    21300042: boat_red_21
+    21300044: boat_red_22
+    21300046: boat_red_23
+    21300048: boat_red_24
+    21300050: boat_red_25
+    21300052: boat_red_26
+    21300054: boat_red_27
+    21300056: boat_red_28
+    21300058: boat_red_29
+    21300060: boat_red_30
+    21300062: boat_red_31
+    21300064: boat_red_32
+    21300066: boat_red_33
+    21300068: boat_red_34
+    21300070: boat_red_35
+    21300072: boat_red_36
+    21300074: boat_red_37
+    21300076: boat_red_38
+    21300078: boat_red_39
+    21300080: boat_red_40
+    21300082: boat_red_41
+    21300084: boat_red_42
+    21300086: boat_red_43
+    21300088: boat_red_44
+    21300090: boat_red_45
+    21300092: boat_red_46
+    21300094: boat_red_47
+    21300096: boat_red_48
+    21300098: boat_red_49
+    21300100: boat_red_50
+    21300102: boat_red_51
+    21300104: boat_red_52
+    21300106: boat_red_53
+    21300108: boat_red_54
+    21300110: boat_red_55
+    21300112: boat_red_56
+    21300114: boat_red_57
+    21300116: boat_red_58
+    21300118: boat_red_59
+    21300120: boat_red_60
+    21300122: boat_red_61
+    21300124: boat_red_62
+    21300126: boat_red_63
+    21300128: boat_red_64
+    21300130: boat_red_65
+    21300132: boat_red_66
+    21300134: boat_red_67
+    21300136: boat_red_68
+    21300138: boat_red_69
+    21300140: boat_red_70
+    21300142: boat_red_71
+    21300144: boat_red_72
+    21300146: boat_red_73
+    21300148: boat_red_74
+    21300150: boat_red_75
+    21300152: boat_red_76
+    21300154: boat_red_77
+    21300156: boat_red_78
+    21300158: boat_red_79
+    21300160: boat_red_80
+    21300162: boat_red_81
+    21300164: boat_red_82
+    21300166: boat_red_83
+    21300168: boat_red_84
+    21300170: boat_red_85
+    21300172: boat_red_86
+    21300174: boat_red_87
+    21300176: boat_red_88
+    21300178: boat_red_89
+    21300180: boat_red_90
+    21300182: boat_red_91
+    21300184: boat_red_92
+    21300186: boat_red_93
+    21300188: boat_red_94
+    21300190: boat_red_95
+    21300192: boat_red_96
+    21300194: boat_red_97
+    21300196: boat_red_98
+    21300198: boat_red_99
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: boat_red_0
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 2089
+        width: 66
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_1
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 2033
+        width: 121
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_2
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 2036
+        width: 89
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_3
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 2037
+        width: 102
+        height: 143
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_4
+      rect:
+        serializedVersion: 2
+        x: 962
+        y: 2089
+        width: 74
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_5
+      rect:
+        serializedVersion: 2
+        x: 1187
+        y: 2089
+        width: 66
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_6
+      rect:
+        serializedVersion: 2
+        x: 1406
+        y: 2089
+        width: 73
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_7
+      rect:
+        serializedVersion: 2
+        x: 1629
+        y: 2089
+        width: 70
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_8
+      rect:
+        serializedVersion: 2
+        x: 1853
+        y: 2090
+        width: 66
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_9
+      rect:
+        serializedVersion: 2
+        x: 2075
+        y: 2089
+        width: 66
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_10
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 1811
+        width: 120
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_11
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 1811
+        width: 121
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_12
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 1815
+        width: 88
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_13
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 1815
+        width: 101
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_14
+      rect:
+        serializedVersion: 2
+        x: 962
+        y: 1867
+        width: 73
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_15
+      rect:
+        serializedVersion: 2
+        x: 1187
+        y: 1868
+        width: 66
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_16
+      rect:
+        serializedVersion: 2
+        x: 1406
+        y: 1868
+        width: 73
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_17
+      rect:
+        serializedVersion: 2
+        x: 1629
+        y: 1868
+        width: 71
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_18
+      rect:
+        serializedVersion: 2
+        x: 1853
+        y: 1868
+        width: 67
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_19
+      rect:
+        serializedVersion: 2
+        x: 2075
+        y: 1868
+        width: 66
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_20
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 1589
+        width: 120
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_21
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 1591
+        width: 89
+        height: 147
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_22
+      rect:
+        serializedVersion: 2
+        x: 497
+        y: 1593
+        width: 115
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_23
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 1592
+        width: 102
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_24
+      rect:
+        serializedVersion: 2
+        x: 962
+        y: 1646
+        width: 73
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_25
+      rect:
+        serializedVersion: 2
+        x: 1187
+        y: 1646
+        width: 66
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_26
+      rect:
+        serializedVersion: 2
+        x: 1406
+        y: 1646
+        width: 73
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_27
+      rect:
+        serializedVersion: 2
+        x: 1628
+        y: 1646
+        width: 73
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_28
+      rect:
+        serializedVersion: 2
+        x: 1853
+        y: 1646
+        width: 67
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_29
+      rect:
+        serializedVersion: 2
+        x: 2075
+        y: 1646
+        width: 66
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_30
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 1371
+        width: 100
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_31
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 1371
+        width: 100
+        height: 141
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_32
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 1371
+        width: 101
+        height: 141
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_33
+      rect:
+        serializedVersion: 2
+        x: 718
+        y: 1369
+        width: 117
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_34
+      rect:
+        serializedVersion: 2
+        x: 962
+        y: 1424
+        width: 74
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_35
+      rect:
+        serializedVersion: 2
+        x: 1187
+        y: 1424
+        width: 66
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_36
+      rect:
+        serializedVersion: 2
+        x: 1407
+        y: 1424
+        width: 70
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_37
+      rect:
+        serializedVersion: 2
+        x: 1628
+        y: 1424
+        width: 73
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_38
+      rect:
+        serializedVersion: 2
+        x: 1852
+        y: 1424
+        width: 68
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_39
+      rect:
+        serializedVersion: 2
+        x: 2075
+        y: 1424
+        width: 66
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_40
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 1147
+        width: 117
+        height: 147
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_41
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 1146
+        width: 118
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_42
+      rect:
+        serializedVersion: 2
+        x: 502
+        y: 1145
+        width: 105
+        height: 151
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_43
+      rect:
+        serializedVersion: 2
+        x: 716
+        y: 1145
+        width: 121
+        height: 151
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_44
+      rect:
+        serializedVersion: 2
+        x: 962
+        y: 1201
+        width: 74
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_45
+      rect:
+        serializedVersion: 2
+        x: 1187
+        y: 1202
+        width: 66
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_46
+      rect:
+        serializedVersion: 2
+        x: 1408
+        y: 1202
+        width: 70
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_47
+      rect:
+        serializedVersion: 2
+        x: 1628
+        y: 1202
+        width: 75
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_48
+      rect:
+        serializedVersion: 2
+        x: 1851
+        y: 1202
+        width: 71
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_49
+      rect:
+        serializedVersion: 2
+        x: 2075
+        y: 1202
+        width: 66
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_50
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 979
+        width: 71
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_51
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 980
+        width: 70
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_52
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 979
+        width: 69
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_53
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 979
+        width: 66
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_54
+      rect:
+        serializedVersion: 2
+        x: 965
+        y: 980
+        width: 67
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_55
+      rect:
+        serializedVersion: 2
+        x: 1186
+        y: 979
+        width: 68
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_56
+      rect:
+        serializedVersion: 2
+        x: 1409
+        y: 980
+        width: 67
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_57
+      rect:
+        serializedVersion: 2
+        x: 1628
+        y: 979
+        width: 73
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_58
+      rect:
+        serializedVersion: 2
+        x: 1850
+        y: 980
+        width: 73
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_59
+      rect:
+        serializedVersion: 2
+        x: 2074
+        y: 979
+        width: 69
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_60
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 758
+        width: 72
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_61
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 758
+        width: 74
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_62
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 758
+        width: 73
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_63
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 758
+        width: 73
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_64
+      rect:
+        serializedVersion: 2
+        x: 962
+        y: 758
+        width: 74
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_65
+      rect:
+        serializedVersion: 2
+        x: 1183
+        y: 758
+        width: 74
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_66
+      rect:
+        serializedVersion: 2
+        x: 1408
+        y: 758
+        width: 67
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_67
+      rect:
+        serializedVersion: 2
+        x: 1628
+        y: 759
+        width: 73
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_68
+      rect:
+        serializedVersion: 2
+        x: 1850
+        y: 758
+        width: 73
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_69
+      rect:
+        serializedVersion: 2
+        x: 2072
+        y: 758
+        width: 72
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_70
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 536
+        width: 66
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_71
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 480
+        width: 121
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_72
+      rect:
+        serializedVersion: 2
+        x: 521
+        y: 536
+        width: 66
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_73
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 536
+        width: 67
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_74
+      rect:
+        serializedVersion: 2
+        x: 965
+        y: 536
+        width: 66
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_75
+      rect:
+        serializedVersion: 2
+        x: 1187
+        y: 536
+        width: 66
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_76
+      rect:
+        serializedVersion: 2
+        x: 1408
+        y: 536
+        width: 68
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_77
+      rect:
+        serializedVersion: 2
+        x: 1628
+        y: 536
+        width: 73
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_78
+      rect:
+        serializedVersion: 2
+        x: 1850
+        y: 536
+        width: 73
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_79
+      rect:
+        serializedVersion: 2
+        x: 2073
+        y: 536
+        width: 71
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_80
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 312
+        width: 73
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_81
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 314
+        width: 72
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_82
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 314
+        width: 70
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_83
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 314
+        width: 68
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_84
+      rect:
+        serializedVersion: 2
+        x: 965
+        y: 314
+        width: 67
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_85
+      rect:
+        serializedVersion: 2
+        x: 1187
+        y: 314
+        width: 66
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_86
+      rect:
+        serializedVersion: 2
+        x: 1409
+        y: 312
+        width: 66
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_87
+      rect:
+        serializedVersion: 2
+        x: 1630
+        y: 312
+        width: 67
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_88
+      rect:
+        serializedVersion: 2
+        x: 1850
+        y: 312
+        width: 73
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_89
+      rect:
+        serializedVersion: 2
+        x: 2072
+        y: 314
+        width: 74
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_90
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 91
+        width: 75
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_91
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 91
+        width: 74
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_92
+      rect:
+        serializedVersion: 2
+        x: 516
+        y: 91
+        width: 75
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_93
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 91
+        width: 73
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_94
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 91
+        width: 71
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_95
+      rect:
+        serializedVersion: 2
+        x: 1186
+        y: 91
+        width: 69
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_96
+      rect:
+        serializedVersion: 2
+        x: 1409
+        y: 93
+        width: 67
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_97
+      rect:
+        serializedVersion: 2
+        x: 1631
+        y: 93
+        width: 68
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_98
+      rect:
+        serializedVersion: 2
+        x: 1853
+        y: 93
+        width: 66
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boat_red_99
+      rect:
+        serializedVersion: 2
+        x: 2071
+        y: 93
+        width: 75
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

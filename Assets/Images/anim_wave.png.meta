@@ -1,0 +1,666 @@
+fileFormatVersion: 2
+guid: 907fa800849244fbb8a9c55e8f60fe04
+timeCreated: 1492295569
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: anim_wave_0
+    21300002: anim_wave_1
+    21300004: anim_wave_2
+    21300006: anim_wave_3
+    21300008: anim_wave_4
+    21300010: anim_wave_5
+    21300012: anim_wave_6
+    21300014: anim_wave_7
+    21300016: anim_wave_8
+    21300018: anim_wave_9
+    21300020: anim_wave_10
+    21300022: anim_wave_11
+    21300024: anim_wave_12
+    21300026: anim_wave_13
+    21300028: anim_wave_14
+    21300030: anim_wave_15
+    21300032: anim_wave_16
+    21300034: anim_wave_17
+    21300036: anim_wave_18
+    21300038: anim_wave_19
+    21300040: anim_wave_20
+    21300042: anim_wave_21
+    21300044: anim_wave_22
+    21300046: anim_wave_23
+    21300048: anim_wave_24
+    21300050: anim_wave_25
+    21300052: anim_wave_26
+    21300054: anim_wave_27
+    21300056: anim_wave_28
+    21300058: anim_wave_29
+    21300060: anim_wave_30
+    21300062: anim_wave_31
+    21300064: anim_wave_32
+    21300066: anim_wave_33
+    21300068: anim_wave_34
+    21300070: anim_wave_35
+    21300072: anim_wave_36
+    21300074: anim_wave_37
+    21300076: anim_wave_38
+    21300078: anim_wave_39
+    21300080: anim_wave_40
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: anim_wave_0
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 3108
+        width: 532
+        height: 333
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_1
+      rect:
+        serializedVersion: 2
+        x: 1289
+        y: 3099
+        width: 505
+        height: 306
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_2
+      rect:
+        serializedVersion: 2
+        x: 1885
+        y: 3106
+        width: 509
+        height: 311
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_3
+      rect:
+        serializedVersion: 2
+        x: 2460
+        y: 3117
+        width: 535
+        height: 336
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_4
+      rect:
+        serializedVersion: 2
+        x: 3070
+        y: 3133
+        width: 519
+        height: 319
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_5
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 2662
+        width: 507
+        height: 311
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_6
+      rect:
+        serializedVersion: 2
+        x: 1882
+        y: 2667
+        width: 514
+        height: 318
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_7
+      rect:
+        serializedVersion: 2
+        x: 2459
+        y: 2685
+        width: 534
+        height: 334
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_8
+      rect:
+        serializedVersion: 2
+        x: 3075
+        y: 2704
+        width: 507
+        height: 307
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_9
+      rect:
+        serializedVersion: 2
+        x: 1097
+        y: 2527
+        width: 16
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_10
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 2227
+        width: 508
+        height: 310
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_11
+      rect:
+        serializedVersion: 2
+        x: 1879
+        y: 2234
+        width: 515
+        height: 319
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_12
+      rect:
+        serializedVersion: 2
+        x: 2458
+        y: 2253
+        width: 534
+        height: 331
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_13
+      rect:
+        serializedVersion: 2
+        x: 3066
+        y: 2259
+        width: 528
+        height: 327
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_14
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 2339
+        width: 14
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_15
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 2343
+        width: 237
+        height: 160
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_16
+      rect:
+        serializedVersion: 2
+        x: 684
+        y: 2241
+        width: 481
+        height: 283
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_17
+      rect:
+        serializedVersion: 2
+        x: 487
+        y: 2093
+        width: 18
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_18
+      rect:
+        serializedVersion: 2
+        x: 680
+        y: 1797
+        width: 502
+        height: 302
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_19
+      rect:
+        serializedVersion: 2
+        x: 1284
+        y: 1793
+        width: 507
+        height: 311
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_20
+      rect:
+        serializedVersion: 2
+        x: 1876
+        y: 1798
+        width: 521
+        height: 325
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_21
+      rect:
+        serializedVersion: 2
+        x: 2457
+        y: 1820
+        width: 531
+        height: 330
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_22
+      rect:
+        serializedVersion: 2
+        x: 3066
+        y: 1825
+        width: 526
+        height: 327
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_23
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 1807
+        width: 480
+        height: 283
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_24
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 1361
+        width: 508
+        height: 310
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_25
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 1362
+        width: 508
+        height: 311
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_26
+      rect:
+        serializedVersion: 2
+        x: 1279
+        y: 1363
+        width: 509
+        height: 312
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_27
+      rect:
+        serializedVersion: 2
+        x: 1872
+        y: 1365
+        width: 522
+        height: 326
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_28
+      rect:
+        serializedVersion: 2
+        x: 2457
+        y: 1386
+        width: 531
+        height: 329
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_29
+      rect:
+        serializedVersion: 2
+        x: 1860
+        y: 935
+        width: 532
+        height: 334
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_30
+      rect:
+        serializedVersion: 2
+        x: 2883
+        y: 1265
+        width: 17
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_31
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 928
+        width: 528
+        height: 332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_32
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 931
+        width: 529
+        height: 332
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_33
+      rect:
+        serializedVersion: 2
+        x: 2469
+        y: 972
+        width: 494
+        height: 291
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_34
+      rect:
+        serializedVersion: 2
+        x: 1244
+        y: 503
+        width: 538
+        height: 337
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_35
+      rect:
+        serializedVersion: 2
+        x: 1852
+        y: 505
+        width: 536
+        height: 337
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_36
+      rect:
+        serializedVersion: 2
+        x: 2877
+        y: 839
+        width: 13
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_37
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 501
+        width: 535
+        height: 336
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_38
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 501
+        width: 537
+        height: 338
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_39
+      rect:
+        serializedVersion: 2
+        x: 2468
+        y: 562
+        width: 466
+        height: 273
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: anim_wave_40
+      rect:
+        serializedVersion: 2
+        x: 2457
+        y: 86
+        width: 525
+        height: 324
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
