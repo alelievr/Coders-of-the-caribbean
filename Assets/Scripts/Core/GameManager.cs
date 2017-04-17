@@ -22,9 +22,8 @@ public class GameManager : MonoBehaviour {
 	[Header("Settings")]
 	public bool		randomSeed = true;
 	public int		seed = 42;
+	[Range(0, 3f)]
 	public float	timeBetweenTurns = .5f;
-	public int		timeoutMillisecs = 50;
-	public int		firstTurnTimeoutMillisecs = 1000;
 
 	[Space()]
 	[Header("View settings")]
@@ -34,11 +33,14 @@ public class GameManager : MonoBehaviour {
 	public GameObject	cannonBallPrefab;
 	public GameObject	cannonShootPrefab;
 
+	public static Transform	debugGameObjectRoot;
+
 	GameReferee				referee;
 	static HexGrid			hexGrid;
 	static PlayerGUI		playerGUI;
 
 	int				round = 0;
+	bool			gameOver = false;
 
 	[HideInInspector]
 	public Vector2	decal = new Vector2(-4.96f, 1.29f);
@@ -50,8 +52,8 @@ public class GameManager : MonoBehaviour {
 	const int		FIRST_PLAYER = 0;
 	const int		SECOND_PLAYER = 1;
 
-	int					mapWidth;
-	int					mapHeight;
+	static int			mapWidth;
+	static int			mapHeight;
 	int					playerShipCount;
 	int					mineVisibilityRange;
 
@@ -73,7 +75,7 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		referee = new GameReferee();
-		
+
 		rumBarrelPool = new GameObjectPool(GameReferee.MAX_RUM_BARRELS * 2);
 		minePool = new GameObjectPool(GameReferee.MAX_MINES * 2);
 		cannonBallPool = new GameObjectPool(GameReferee.MAX_SHIPS * 2);
@@ -81,12 +83,21 @@ public class GameManager : MonoBehaviour {
 
 		hexGrid = FindObjectOfType< HexGrid >();
 		playerGUI = FindObjectOfType< PlayerGUI >();
+		
+		debugGameObjectRoot = new GameObject("debugObjectRoot").transform;
+		debugGameObjectRoot.parent = hexGrid.transform;
+		debugGameObjectRoot.localPosition = Vector3.zero;
 
 		LoadResources();
 
+		StartGame();
+	}
+
+	void StartGame()
+	{
 		Properties	props = new Properties();
 		
-		props.put("seed", Random.Range(-200000, 20000));
+		props.put("seed", (randomSeed) ? Random.Range(-200000, 20000) : seed);
 		props.put("shipsPerPlayer", shipsPerPlayer);
 //		props.put("mineCount", mineCount);
 //		props.put("barrelCount", barrelCount);
@@ -130,9 +141,20 @@ public class GameManager : MonoBehaviour {
 
 			//update game status
 			referee.updateGame(round);
-	
+
 			//update view
 			UpdateView();
+	
+			if (referee.isPlayerDead(0))
+			{
+				GameOver(false);
+				break ;
+			}
+			else if (referee.isPlayerDead(1))
+			{
+				GameOver(true);
+				break ;
+			}
 	
 			round++;
 		}
@@ -188,9 +210,9 @@ public class GameManager : MonoBehaviour {
 		st.Start();
 		playerOutput = ai.PlayTurn(playerShipCount, entityCount, ships, rumBarrels, mines, cannonBalls);
 		st.Stop();
-		Debug.Log("player " + playerIndex + " AI took " + st.ElapsedMilliseconds + "ms");
+		playerGUI.UpdateCalculTime(playerIndex, (int)st.ElapsedMilliseconds);
 
-		return playerOutput.Split(';');
+		return playerOutput.Split('\n');
 	}
 
 	void InitVisualizator(string[] infos)
@@ -201,7 +223,7 @@ public class GameManager : MonoBehaviour {
 		playerShipCount = int.Parse(datas[2]);
 		mineVisibilityRange = int.Parse(datas[3]);
 		
-		hexGrid.BuildHexMap(mapWidth - 1, mapHeight - 1);
+		hexGrid.BuildHexMap(mapWidth, mapHeight);
 	}
 
 	GameObject InstanciateShip(int owner, int id)
@@ -214,9 +236,10 @@ public class GameManager : MonoBehaviour {
 
 	Vector2	CoordToPosition(GameReferee.Coord position)
 	{
-		Vector2 pos = new Vector2(position.x, position.y) * HexMetrics.outerRadius;
+		int y = mapHeight - position.y - 1;
+		Vector2 pos = new Vector2(position.x, y) * HexMetrics.outerRadius;
 
-		pos.x += ((position.y % 2) * HexMetrics.outerRadius) / 2f;
+		pos.x += ((y % 2) * HexMetrics.outerRadius) / 2f;
 		pos.x *= scaleX;
 		pos.y *= scaleY;
 
@@ -271,7 +294,7 @@ public class GameManager : MonoBehaviour {
 				if (g == null)
 					g = playerShips[ship.id] = InstanciateShip(ship.owner, ship.id);
 				g.transform.position = CoordToPosition(ship.position);
-				g.transform.rotation = Quaternion.Euler(0, 0, ship.orientation * 60 + 90);
+				g.transform.rotation = Quaternion.Euler(0, 0, ship.orientation * 60 - 90);
 				i++;
 				playerGUI.UpdatePlayerShipHealth(ship.owner, shipsPerPlayer, ship.id, ship.health);
 			}
@@ -316,17 +339,56 @@ public class GameManager : MonoBehaviour {
 		GameObject.Instantiate(anim, new Vector2(x, y), Quaternion.identity);
 	}
 
+	public void GameOver(bool win)
+	{
+		playerGUI.GameOver(win, true);
+		gameOver = true;
+	}
+
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space) && gameOver)
+		{
+			gameOver = false;
+			playerGUI.GameOver(true, false);
+			playerGUI.GameOver(false, false);
+			StartGame();
+		}
+	}
+
 	//Player access:
 
 	public static void SetCellText(int x, int y, string text)
 	{
 		if (hexGrid != null)
-			hexGrid.SetCellText(x, y, text);
+			hexGrid.SetCellText(x, y, text, Color.white);
+	}
+	
+	public static void SetCellText(int x, int y, string text, Color c)
+	{
+		if (hexGrid != null)
+			hexGrid.SetCellText(x, y, text, c);
 	}
 
 	public static void SetCellColor(int x, int y, Color c)
 	{
 		if (hexGrid != null)
 			hexGrid.SetCellColor(x, y, c);
+	}
+
+	public static Vector3 GridToWorldPosition(int x, int y)
+	{
+ 		return new Vector3(
+			(x * HexMetrics.innerRadius + ((y % 2) * HexMetrics.innerRadius) / 2f) * 2f,
+			(y * HexMetrics.innerRadius) * 1.73f,
+			-7f);
+	}
+
+	public static GameObject AddObjectAt(int x, int y, GameObject g)
+	{
+		y = mapHeight - y - 1;
+		g.transform.parent = debugGameObjectRoot;
+		g.transform.localPosition = GridToWorldPosition(x, y);
+		return g;
 	}
 }

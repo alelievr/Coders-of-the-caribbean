@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class EnemyAI : PlayerAI {
 
+	//the *Data storage classes are stored in Core/EntityDatas.cs file if you want them for CG.
+
 	public override string PlayTurn(
 		int myShipCount, int enemyShipCount,
 		List< ShipData > ships,
@@ -18,9 +20,13 @@ public class EnemyAI : PlayerAI {
 
 		foreach (var ship in myShips)
 		{
-			ret += "MOVE " + Random.Range(0, 22) + " " + Random.Range(0, 20) + ship;
+			var rumBarrel = rumBarrels.OrderBy(r => (r.x - ship.x) + (r.y - ship.y)).First();
+			if (rumBarrel != null)
+				ret += "MOVE " + rumBarrel.x + " " + rumBarrel.y;
+			else
+				ret += "MOVE " + Random.Range(0, 22) + " " + Random.Range(0, 20) + ship;
 			if (ship != myShips.Last())
-				ret += ";";
+				ret += "\n";
 		}
 
 		return ret;

@@ -1,8 +1,0 @@
-end condition + replay
-display text on each cell (with UI system)
-on click on entity, get his informations
-animation between two frames, fluidly moving ships and cannonballs
-save each rounds of the game so you can load any frame of the match.
--> UI to pause / replay / select a round in a match
-
-additional debug infos in the left bar

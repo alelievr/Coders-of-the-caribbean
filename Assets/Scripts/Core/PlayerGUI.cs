@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerGUI : MonoBehaviour {
@@ -11,6 +9,13 @@ public class PlayerGUI : MonoBehaviour {
 	[SpaceAttribute]
 	public Image[]	redShipHealthImages;
 	public Text[]	redShipHealthTexts;
+
+	public Text		orangePlayerCalculusTime;
+	public Text		redPlayerCalculusTime;
+
+	[SpaceAttribute]
+	public GameObject	winPanel;
+	public GameObject	loosePanel;
 
 	public void UpdatePlayerShipHealth(int player, int shipPerPlayer, int shipId, int health)
 	{
@@ -24,5 +29,21 @@ public class PlayerGUI : MonoBehaviour {
 			redShipHealthImages[shipId - player * shipPerPlayer].fillAmount = (health / 100f);
 			redShipHealthTexts[shipId - player * shipPerPlayer].text = health.ToString();
 		}
+	}
+
+	public void GameOver(bool win, bool display = true)
+	{
+		if (win)
+			winPanel.SetActive(display);
+		else
+			loosePanel.SetActive(display);
+	}
+
+	public void UpdateCalculTime(int player, int ms)
+	{
+		if (player == 0)
+			orangePlayerCalculusTime.text = ms + "ms";
+		else
+			redPlayerCalculusTime.text = ms + "ms";
 	}
 }

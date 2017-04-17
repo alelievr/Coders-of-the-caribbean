@@ -6,9 +6,11 @@ public class HexGrid : MonoBehaviour {
     int width;
     int height;
 
-    public HexCell	cellPrefab;
+    public HexCell		cellPrefab;
+	public GameObject	textCell;
 
     HexCell[,]		cells;
+	TextMesh[,]		texts;
     HexMesh			hexMesh;
 
 	public void BuildHexMap (int width, int height) {
@@ -16,12 +18,13 @@ public class HexGrid : MonoBehaviour {
 		this.height = height;
 
 		cells = new HexCell[width, height];
+		texts = new TextMesh[width, height];
 
         hexMesh = GetComponentInChildren<HexMesh>();
 
         for (int z = 0; z < height; z++) {
 			for (int x = 0; x < width; x++) {
-				CreateCell(x, z);
+				CreateCell(x, height - z - 1);
 			}
 		}
 		hexMesh.Triangulate(cells);
@@ -62,21 +65,20 @@ public class HexGrid : MonoBehaviour {
 
 	public void SetCellColor(int x, int y, Color c)
 	{
+		y = height - y - 1;
 		cells[x, y].color = c;
 		hexMesh.Triangulate(cells);
 	}
 
-	public void	SetCellText(int x, int y, string text)
+	public void	SetCellText(int x, int y, string text, Color c)
 	{
-		cells[x, y].text = text;
+		y = height - y - 1;
+		if (texts[x, y] == null)
+		{
+			texts[x, y] = Instantiate(textCell, hexMesh.transform).GetComponent< TextMesh >();
+			texts[x, y].transform.localPosition = GameManager.GridToWorldPosition(x, y);
+		}
+		texts[x, y].text = text;
+		texts[x, y].color = c;
 	}
-
-	void OnDrawGizmos()
-	{
-		for (int x = 0; x < width; x++)
-			for (int y = 0; y < height; y++)
-				if (cells[x, y].text != null)
-					Handles.Label(cells[x, y].center, cells[x, y].text);
-	}
-
 }

@@ -26,7 +26,7 @@ public class Properties : Dictionary< string, object >
     }
 }
 
-class GameReferee {
+public class GameReferee {
 
     private static readonly int LEAGUE_LEVEL = 3;
 
@@ -54,6 +54,8 @@ class GameReferee {
     public static int NEAR_MINE_DAMAGE = 10;
     public static bool CANNONS_ENABLED;
     public static bool MINES_ENABLED;
+    
+    private static int UNIQUE_ENTITY_ID = 0;
 
     public GameReferee()
     {
@@ -232,8 +234,6 @@ class GameReferee {
     }
 
     public abstract class Entity {
-        private static int UNIQUE_ENTITY_ID = 0;
-
         public  int id;
         public  EntityType type;
         public Coord position;
@@ -662,6 +662,7 @@ class GameReferee {
     private Random random;
 
     public void initReferee(int playerCount, Properties prop) {
+        UNIQUE_ENTITY_ID = 0;
         seed = int.Parse("" + prop.getProperty("seed", "" + (Random.Range(-10000000, 10000000))));
         Random.InitState(seed);
 
@@ -824,7 +825,7 @@ class GameReferee {
                 ship.setMessage(matchFire.Groups["message"].Value);
                 ship.fire(x, y);
             } else {
-                Debug.Log("invalid action: " + line);
+                Debug.LogWarning("invalid action: \"" + line + "\"");
                 break ;
             }
         }
@@ -926,7 +927,6 @@ class GameReferee {
         Coord stern = ship.stern();
         Coord center = ship.position;
 
-        if (ship.id == 0)
         // Collision with the barrels
         barrels.RemoveAll(barrel => {
             if (barrel.position.equals(bow) || barrel.position.equals(stern) || barrel.position.equals(center)) {
@@ -1140,7 +1140,6 @@ class GameReferee {
         });
 
         if (gameIsOver()) {
-            Debug.Log("Game is Over !");
         }
     }
 
@@ -1264,7 +1263,7 @@ class GameReferee {
     }
 
     public bool isPlayerDead(int playerIdx) {
-        return false;
+        return players[playerIdx].shipsAlive.Count == 0;
     }
 
     public String getDeathReason(int playerIdx) {
