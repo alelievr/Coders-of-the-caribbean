@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
+using System.Linq;
 using Random = UnityEngine.Random;
 using Debug = UnityEngine.Debug;
 
@@ -32,15 +33,14 @@ public class GameManager : MonoBehaviour {
 	public GameObject	explosionPrefab;
 	public GameObject	cannonBallPrefab;
 	public GameObject	cannonShootPrefab;
-
-	public static Transform	debugGameObjectRoot;
+	
+#region Internal manager variables
+	const int		FIRST_PLAYER = 0;
+	const int		SECOND_PLAYER = 1;
 
 	GameReferee				referee;
 	static HexGrid			hexGrid;
 	static PlayerGUI		playerGUI;
-
-	int				round = 0;
-	bool			gameOver = false;
 
 	[HideInInspector]
 	public Vector2	decal = new Vector2(-4.96f, 1.29f);
@@ -49,28 +49,34 @@ public class GameManager : MonoBehaviour {
 	[HideInInspector]
 	public float	scaleY = 1.51f;
 
-	const int		FIRST_PLAYER = 0;
-	const int		SECOND_PLAYER = 1;
+	public static Transform	debugGameObjectRoot;
 
 	static int			mapWidth;
 	static int			mapHeight;
-	int					playerShipCount;
+	int					round = 0;
+	bool				gameOver = false;
 	int					mineVisibilityRange;
 
-	//TODO: remove these pools
-	GameObjectPool		rumBarrelPool;
-	GameObjectPool		minePool;
-	GameObjectPool		cannonBallPool;
-	GameObject[]		playerShips;
+	GameObjectPool					rumBarrelPool;
+	GameObjectPool					minePool;
+	GameObjectPool					cannonBallPool;
+	GameObject[]					playerShips;
 
-	GameObject[]		orangeShips;
-	GameObject[]		redShips;
+	GameObject[]					orangeShips;
+	GameObject[]					redShips;
 	
-	List< GameReferee.Player > players = new List< GameReferee.Player >();
-	List< GameReferee.Cannonball > cannonBalls = new List< GameReferee.Cannonball >();
-	List< GameReferee.Mine > mines = new List< GameReferee.Mine >();
-	List< GameReferee.RumBarrel > rumBarrels = new List< GameReferee.RumBarrel >();
-	List< GameReferee.Damage > damages = new List< GameReferee.Damage >();
+	List< GameReferee.Player >		players = new List< GameReferee.Player >();
+	List< GameReferee.Cannonball >	cannonBalls = new List< GameReferee.Cannonball >();
+	List< GameReferee.Mine >		mines = new List< GameReferee.Mine >();
+	List< GameReferee.RumBarrel >	rumBarrels = new List< GameReferee.RumBarrel >();
+	List< GameReferee.Damage >		damages = new List< GameReferee.Damage >();
+
+	List< GameReferee.Player >		oldPlayers;
+
+	List< GameSnapshot >			snapshot = new List< GameSnapshot >();
+#endregion
+
+#region Start and Initializaion
 
 	// Use this for initialization
 	void Start () {
@@ -99,13 +105,15 @@ public class GameManager : MonoBehaviour {
 		
 		props.put("seed", (randomSeed) ? Random.Range(-200000, 20000) : seed);
 		props.put("shipsPerPlayer", shipsPerPlayer);
-//		props.put("mineCount", mineCount);
-//		props.put("barrelCount", barrelCount);
+		//props.put("mineCount", mineCount);
+		//props.put("barrelCount", barrelCount);
 
 		referee.initReferee(2, props);
 
 		InitVisualizator(referee.getInitDataForView());
 		UpdateView();
+
+		oldPlayers = players;
 
 		StartCoroutine(ExecuteRound());
 	}
@@ -122,6 +130,9 @@ public class GameManager : MonoBehaviour {
 		redShips[2] = Resources.Load< GameObject >("boat_red_skull");
 		redShips[3] = Resources.Load< GameObject >("boat_red__");
 	}
+#endregion
+
+#region Rounds execution
 
 	IEnumerator ExecuteRound()
 	{
@@ -144,7 +155,12 @@ public class GameManager : MonoBehaviour {
 
 			//update view
 			UpdateView();
-	
+
+			//take a snapshot of the round
+			snapshot.Add(new GameSnapshot(referee, oldPlayers));
+
+			oldPlayers = players;
+
 			if (referee.isPlayerDead(0))
 			{
 				GameOver(false);
@@ -214,38 +230,20 @@ public class GameManager : MonoBehaviour {
 
 		return playerOutput.Split('\n');
 	}
+#endregion
+
+#region Visualization
 
 	void InitVisualizator(string[] infos)
 	{
 		var datas = infos[1].Split(' ');
 		mapWidth = int.Parse(datas[0]);
 		mapHeight = int.Parse(datas[1]);
-		playerShipCount = int.Parse(datas[2]);
 		mineVisibilityRange = int.Parse(datas[3]);
 		
 		hexGrid.BuildHexMap(mapWidth, mapHeight);
 	}
 
-	GameObject InstanciateShip(int owner, int id)
-	{
-		if (owner == 0)
-			return Instantiate(orangeShips[id]);
-		else
-			return Instantiate(redShips[id - shipsPerPlayer]);
-	}
-
-	Vector2	CoordToPosition(GameReferee.Coord position)
-	{
-		int y = mapHeight - position.y - 1;
-		Vector2 pos = new Vector2(position.x, y) * HexMetrics.outerRadius;
-
-		pos.x += ((y % 2) * HexMetrics.outerRadius) / 2f;
-		pos.x *= scaleX;
-		pos.y *= scaleY;
-
-		return (pos) + decal;
-	}
-	
 	void UpdateView()
 	{
 		players.Clear();
@@ -256,8 +254,24 @@ public class GameManager : MonoBehaviour {
 		referee.getFrameDataForView(players, cannonBalls, mines, rumBarrels, damages);
 
 		UpdateVisualizator();
+	}
 
-		//TODO: save old player ships
+	void ApplyShipVisibilityRange(int playerIndex)
+	{
+		var ships = players.Where(p => p.id == playerIndex).Select(p => p.ships);
+
+		for (int x = 0; x < mapWidth; x++)
+			for (int y = 0; y < mapHeight; y++)
+				hexGrid.SetCellColorFilter(x, y, Color.black);
+
+		foreach (var ship in ships.First())
+			for (int x = 0; x < mapWidth; x++)
+				for (int y = 0; y < mapHeight; y++)
+				{
+					if (Vector2.Distance(new Vector2(ship.position.x, ship.position.y), new Vector2(x, y)) < mineVisibilityRange)
+						if (x < mapWidth && x >= 0 && y < mapHeight && y >= 0)
+							hexGrid.SetCellColorFilter(x, y, new Color(.1f, .1f, .1f));
+				}
 	}
 
 	IEnumerator fadeAndDestroy(GameObject g, int shipId)
@@ -330,13 +344,12 @@ public class GameManager : MonoBehaviour {
 			Destroy(g, 1);
 		}
 
+		ApplyShipVisibilityRange(FIRST_PLAYER);
+
+		hexGrid.UpdateMap();
+
 		rumBarrelPool.RemoveUnused(() => {});
 		minePool.RemoveUnused(() => {});
-	}
-
-	public void InstanciateAnimation(int x, int y, GameManager anim)
-	{
-		GameObject.Instantiate(anim, new Vector2(x, y), Quaternion.identity);
 	}
 
 	public void GameOver(bool win)
@@ -355,8 +368,11 @@ public class GameManager : MonoBehaviour {
 			StartGame();
 		}
 	}
+#endregion 
 
-	//Player access:
+#region Player API
+
+	//Player access functions:
 
 	public static void SetCellText(int x, int y, string text)
 	{
@@ -391,4 +407,61 @@ public class GameManager : MonoBehaviour {
 		g.transform.localPosition = GridToWorldPosition(x, y);
 		return g;
 	}
+#endregion
+
+#region GUI Callbacks
+	//GUI callbacks:
+	public void OnFirstClicked()
+	{
+
+	}
+
+	public void OnPrevClicked()
+	{
+
+	}
+
+	public void OnNextClicked()
+	{
+
+	}
+
+	public void OnPlayClicked()
+	{
+
+	}
+
+	public void OnLastClicked()
+	{
+
+	}
+
+	public void OnRoundSliderValueChanged(float val)
+	{
+		
+	}
+
+#endregion
+
+#region Utils
+	GameObject InstanciateShip(int owner, int id)
+	{
+		if (owner == FIRST_PLAYER)
+			return Instantiate(orangeShips[id]);
+		else
+			return Instantiate(redShips[id - shipsPerPlayer]);
+	}
+
+	Vector2	CoordToPosition(GameReferee.Coord position)
+	{
+		int y = mapHeight - position.y - 1;
+		Vector2 pos = new Vector2(position.x, y) * HexMetrics.outerRadius;
+
+		pos.x += ((y % 2) * HexMetrics.outerRadius) / 2f;
+		pos.x *= scaleX;
+		pos.y *= scaleY;
+
+		return (pos) + decal;
+	}
+#endregion
 }

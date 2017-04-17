@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class GameSnapshot {
 
-	public GameReferee				referee;
-	public List< GameReferee.Ship >	oldShips;
+	public GameReferee					referee;
+	public List< GameReferee.Player >	oldPlayers;
 
-	// Use this for initialization
-	void Start () {
-		
+	public GameSnapshot(GameReferee gr, List< GameReferee.Player > op)
+	{
+		//TODO: clone these classes
+		referee = gr;
+		oldPlayers = op;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	public void Restore(out GameReferee gr, out List< GameReferee.Player > op)
+	{
+		gr = referee;
+		op = oldPlayers;
 	}
+
 }

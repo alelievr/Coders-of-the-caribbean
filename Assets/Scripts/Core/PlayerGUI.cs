@@ -10,12 +10,16 @@ public class PlayerGUI : MonoBehaviour {
 	public Image[]	redShipHealthImages;
 	public Text[]	redShipHealthTexts;
 
+	[SpaceAttribute]
 	public Text		orangePlayerCalculusTime;
 	public Text		redPlayerCalculusTime;
 
 	[SpaceAttribute]
 	public GameObject	winPanel;
 	public GameObject	loosePanel;
+
+	[SpaceAttribute]
+	public Text		roundText;
 
 	public void UpdatePlayerShipHealth(int player, int shipPerPlayer, int shipId, int health)
 	{
@@ -45,5 +49,10 @@ public class PlayerGUI : MonoBehaviour {
 			orangePlayerCalculusTime.text = ms + "ms";
 		else
 			redPlayerCalculusTime.text = ms + "ms";
+	}
+
+	public void UpdateRoundNumber(int r, int total)
+	{
+		roundText.text = r + " / " + total;
 	}
 }

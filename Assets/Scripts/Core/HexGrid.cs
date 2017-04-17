@@ -3,7 +3,7 @@ using UnityEditor;
 
 public class HexGrid : MonoBehaviour {
 
-    int width;
+    // int width;
     int height;
 
     public HexCell		cellPrefab;
@@ -14,7 +14,7 @@ public class HexGrid : MonoBehaviour {
     HexMesh			hexMesh;
 
 	public void BuildHexMap (int width, int height) {
-		this.width = width;
+		// this.width = width;
 		this.height = height;
 
 		cells = new HexCell[width, height];
@@ -39,34 +39,20 @@ public class HexGrid : MonoBehaviour {
 		cells[x, z] = new HexCell(x, z, position);
 	}
 
-	void Update () {
-		if (Input.GetMouseButton(0)) {
-			HandleInput();
-		}
-	}
-
-	void HandleInput () {
-		Ray inputRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-		RaycastHit hit;
-		if (Physics.Raycast(inputRay, out hit)) {
-			TouchCell(hit.point);
-		}
-	}
-	
-	void TouchCell (Vector3 position) {
-		position = transform.InverseTransformPoint(position);
-		HexCoordinates coordinates = HexCoordinates.FromPosition(position);
-		Debug.Log("touched at " + coordinates.ToString());
-
-		HexCell cell = cells[coordinates.X + coordinates.Y / 2, coordinates.Y];
-		cell.color = Color.red;
-		hexMesh.Triangulate(cells);
-	}
-
 	public void SetCellColor(int x, int y, Color c)
 	{
 		y = height - y - 1;
 		cells[x, y].color = c;
+	}
+
+	public void SetCellColorFilter(int x, int y, Color c)
+	{
+		y = height - y - 1;
+		cells[x, y].colorFilter = c;
+	}
+
+	public void UpdateMap()
+	{
 		hexMesh.Triangulate(cells);
 	}
 

@@ -18,17 +18,20 @@ public class MyAI : PlayerAI {
 
 		foreach (var ship in myShips)
 		{
-			var rumBarrel = rumBarrels.OrderBy(r => (r.x - ship.x) + (r.y - ship.y)).First();
-			if (rumBarrel != null)
-				ret += "MOVE " + rumBarrel.x + " " + rumBarrel.y;
+			if (rumBarrels.Count != 0)
+			{
+				var rumBarrel = rumBarrels.OrderBy(r => (r.x - ship.x) + (r.y - ship.y)).First();
+				if (rumBarrel != null)
+					ret += "MOVE " + rumBarrel.x + " " + rumBarrel.y;
+			}
 			else
 				ret += "MOVE " + Random.Range(0, 22) + " " + Random.Range(0, 20) + ship;
 			if (ship != myShips.Last())
 				ret += "\n";
 		}
 
-		GameManager.SetCellColor(0, 0, Color.red);
-		GameManager.SetCellText(2, 2, "olol");
+		// GameManager.SetCellColor(Random.Range(0, 20), 0, Color.red);
+		// GameManager.SetCellText(2, 2, "olol");
 
 		// var g = GameManager.AddObjectAt(0, 0, GameObject.CreatePrimitive(PrimitiveType.Cube));
 		// g.transform.localScale = Vector3.one * .7f;
