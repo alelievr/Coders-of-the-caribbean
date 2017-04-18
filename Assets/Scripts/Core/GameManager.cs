@@ -9,8 +9,8 @@ using Debug = UnityEngine.Debug;
 public class GameManager : MonoBehaviour {
 
 	[Header("Players")]
-	public PlayerAI	firstPlayer;
-	public PlayerAI	secondPlayer;
+	public PlayerAI		playerAI;
+	public PlayerAI[]	enemyAIs;
 
 	[Space()]
 	[Header("Game Config")]
@@ -25,6 +25,10 @@ public class GameManager : MonoBehaviour {
 	public int		seed = 42;
 	[Range(0, 3f)]
 	public float	timeBetweenTurns = .5f;
+	[Range(0, 6)]
+	public int		previousFrameVisibility = 2;
+	[Range(0, 6)]
+	public int		folowingFrameVisibility = 2;
 
 	[Space()]
 	[Header("View settings")]
@@ -37,6 +41,8 @@ public class GameManager : MonoBehaviour {
 #region Internal manager variables
 	const int		FIRST_PLAYER = 0;
 	const int		SECOND_PLAYER = 1;
+
+	int				enemyAIId = 0;
 
 	GameReferee				referee;
 	static HexGrid			hexGrid;
@@ -148,8 +154,8 @@ public class GameManager : MonoBehaviour {
 			referee.prepare(round);
 
 			//execute players AI
-			var firstPlayerOutput = ExecutePlayerActions(firstPlayer, FIRST_PLAYER);
-			var secondPlayerOutput = ExecutePlayerActions(secondPlayer, SECOND_PLAYER);
+			var firstPlayerOutput = ExecutePlayerActions(playerAI, FIRST_PLAYER);
+			var secondPlayerOutput = ExecutePlayerActions(enemyAIs[enemyAIId], SECOND_PLAYER);
 	
 			//send result to the referee
 			referee.handlePlayerOutput(0, round, FIRST_PLAYER, firstPlayerOutput);
@@ -250,6 +256,89 @@ public class GameManager : MonoBehaviour {
 		hexGrid.BuildHexMap(mapWidth, mapHeight);
 	}
 
+	Queue< IEnumerator > animationCoroutines = new Queue< IEnumerator >();
+
+	IEnumerator ShipAnimation(GameReferee.Ship ship, GameReferee.Ship oldShip)
+	{
+		GameObject shipGO = playerShips[ship.id];
+		if (shipGO == null)
+			yield return null;
+
+		int		nIter = Mathf.RoundToInt(timeBetweenTurns / Time.deltaTime);
+		int		i = 0;
+
+		while (i != nIter)
+		{
+			float t = ((float)i / nIter);
+			shipGO.transform.position = Vector3.Lerp(shipGO.transform.position, CoordToPosition(ship.position), t);
+			shipGO.transform.rotation = Quaternion.Lerp(shipGO.transform.rotation, Quaternion.Euler(0, 0, ship.orientation * 60 - 90), t);
+			yield return new WaitForSeconds(Time.deltaTime);
+		}
+	}
+
+	void StartAnimations()
+	{
+		//TODO: start animations of ghosts
+
+		//TODO: animate cannon balls
+
+		if (oldPlayers == null)
+			return ;
+		for (int i = 0; i < players.Count; i++)
+		{
+			var player = players[i];
+			var oldPlayer = oldPlayers[i];
+
+			for (int j = 0; j < player.ships.Count; j++)
+			{
+				var ship = player.ships[j];
+				var oldShip = oldPlayer.ships[j];
+
+				var anim = ShipAnimation(ship, oldShip);
+				animationCoroutines.Enqueue(anim);
+				StartCoroutine(anim);
+			}
+		}
+	}
+
+	void StopAnimations()
+	{
+		foreach (var anim in animationCoroutines.ToList())
+			StopCoroutine(animationCoroutines.Dequeue());
+		
+		//TODO: end animations of ghosts
+	}
+
+	void ShowPreviousBoatGhost()
+	{
+		for (int i = 0; i < previousFrameVisibility; i++)
+		{
+			GameReferee 				gr;
+			List< GameReferee.Player >	oldPlayers;
+
+			if (round - i > 0)
+			{
+				snapshots[round - i].FastCheck(out gr, out oldPlayers);
+				//instanciate ghosts
+			}
+		}
+	}
+
+	void ShowFolowingAnimations()
+	{
+		for (int i = 0; i < folowingFrameVisibility; i++)
+		{
+			GameReferee 				gr;
+			List< GameReferee.Player >	oldPlayers;
+
+			if (round + i < snapshots.Count)
+			{
+				snapshots[round + i].FastCheck(out gr, out oldPlayers);
+				//instanciate ghosts
+			}
+		}
+	}
+
 	void UpdateView()
 	{
 		players.Clear();
@@ -264,6 +353,8 @@ public class GameManager : MonoBehaviour {
 		sliderUpdateDisabled = false;
 
 		UpdateVisualizator();
+
+		StartAnimations();
 	}
 
 	void ApplyShipVisibilityRange(int playerIndex)
@@ -490,6 +581,20 @@ public class GameManager : MonoBehaviour {
 			Pause();
 			UpdateView();
 		}
+	}
+
+	public void OnEnemyUpButtonClicked()
+	{
+		enemyAIId = (enemyAIId == 0) ? enemyAIs.Length - 1 : enemyAIId - 1;
+		playerGUI.UpdateEnemyName(enemyAIs[enemyAIId].name);
+		// StartGame();
+	}
+
+	public void OnEnemyDownButtonClicked()
+	{
+		enemyAIId = ++enemyAIId % enemyAIs.Length;
+		playerGUI.UpdateEnemyName(enemyAIs[enemyAIId].name);
+		// StartGame();
 	}
 
 #endregion

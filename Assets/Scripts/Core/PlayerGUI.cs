@@ -25,6 +25,9 @@ public class PlayerGUI : MonoBehaviour {
 	public Sprite	pauseSprite;
 	public Sprite	playSprite;
 
+	[SpaceAttribute]
+	public Text		enemyNameText;
+
 	public void UpdatePlayerShipHealth(int player, int shipPerPlayer, int shipId, int health)
 	{
 		if (player == 0)
@@ -68,5 +71,10 @@ public class PlayerGUI : MonoBehaviour {
 			pauseImageButton.sprite = pauseSprite;
 		else
 			pauseImageButton.sprite = playSprite;
+	}
+
+	public void UpdateEnemyName(string name)
+	{
+		enemyNameText.text = name;
 	}
 }

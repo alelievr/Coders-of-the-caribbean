@@ -37,4 +37,9 @@ public class GameSnapshot {
 		op = bf.Deserialize(stream) as List< GameReferee.Player >;
 	}
 
+	public void FastCheck(out GameReferee gr, out List< GameReferee.Player > op)
+	{
+		gr = referee;
+		op = oldPlayers;
+	}
 }
