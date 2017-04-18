@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Diagnostics;
 using System.Linq;
 using Random = UnityEngine.Random;
-using Debug = UnityEngine.Debug;
+using Debug = UnityEngine.Debug	;
 
 public class GameManager : MonoBehaviour {
 
@@ -543,6 +543,12 @@ public class GameManager : MonoBehaviour {
 		if (playerGUI != null)
 			playerGUI.UpdateShipDebugText(shipId, debug);
 	}
+
+	public static int HexDistance(int x1, int y1, int x2, int y2)
+	{
+		return new GameReferee.Coord(x1, y1).distanceTo(new GameReferee.Coord(x2, y2));
+	}
+
 #endregion
 
 #region GUI Callbacks

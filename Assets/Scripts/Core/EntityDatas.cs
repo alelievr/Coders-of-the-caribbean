@@ -21,6 +21,7 @@ public class ShipData : EntityData {
 		this.x = x;
 		this.y = y;
 		this.orientation = orientation;
+		this.entityType = "SHIP";
 		this.speed = speed;
 		this.health = health;
 		this.owner = owner;
