@@ -9,7 +9,6 @@ Currently you have two debug function:
 you also have `AddObjectAt` function if you want to add GameObjects over a cell position.  
 
 ### TODO
-+ display with boat ghost previous and folowing positions
 + animation between two frames, fluidly moving ships and cannonballs
 + on click on entity, get his informations
 + buttons to dynamically change object position / add new objects in the game and remake AI simulation

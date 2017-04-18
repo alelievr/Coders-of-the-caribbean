@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour {
 
 	int				enemyAIId = 0;
 
+	const float		FRAME_DELAY_60FPS = 0.01666666667f;
+
 	GameReferee				referee;
 	static HexGrid			hexGrid;
 	static PlayerGUI		playerGUI;
@@ -69,6 +71,7 @@ public class GameManager : MonoBehaviour {
 	GameObjectPool					rumBarrelPool;
 	GameObjectPool					minePool;
 	GameObjectPool					cannonBallPool;
+	GameObjectPool					ghostBoatPool;
 	GameObject[]					playerShips;
 
 	GameObject[]					orangeShips;
@@ -94,6 +97,7 @@ public class GameManager : MonoBehaviour {
 		rumBarrelPool = new GameObjectPool(GameReferee.MAX_RUM_BARRELS * 2);
 		minePool = new GameObjectPool(GameReferee.MAX_MINES * 2);
 		cannonBallPool = new GameObjectPool(GameReferee.MAX_SHIPS * 2);
+		ghostBoatPool = new GameObjectPool(20 * 2);
 		playerShips = new GameObject[shipsPerPlayer * 2];
 
 		hexGrid = FindObjectOfType< HexGrid >();
@@ -124,7 +128,7 @@ public class GameManager : MonoBehaviour {
 		InitVisualizator(referee.getInitDataForView());
 		UpdateView();
 
-		oldPlayers = players;
+		oldPlayers = GameSnapshot.CloneObject< List< GameReferee.Player > >(players);
 
 		StartCoroutine("ExecuteRound");
 	}
@@ -178,7 +182,7 @@ public class GameManager : MonoBehaviour {
 			//take a snapshots of the round
 			snapshots[round] = new GameSnapshot(referee, oldPlayers);
 
-			oldPlayers = players;
+			oldPlayers = GameSnapshot.CloneObject< List< GameReferee.Player > >(players);
 
 			if (referee.isPlayerDead(0))
 			{
@@ -269,18 +273,21 @@ public class GameManager : MonoBehaviour {
 	IEnumerator ShipAnimation(GameReferee.Ship ship, GameReferee.Ship oldShip)
 	{
 		GameObject shipGO = playerShips[ship.id];
-		if (shipGO == null)
+		if (shipGO == null || ship == null || oldShip == null)
 			yield return null;
 
-		int		nIter = Mathf.RoundToInt(timeBetweenTurns / Time.deltaTime);
+		int		nIter = Mathf.RoundToInt(timeBetweenTurns / FRAME_DELAY_60FPS);
 		int		i = 0;
+
+		shipGO.transform.position = CoordToPosition(oldShip.position);
 
 		while (i != nIter)
 		{
-			float t = ((float)i / nIter);
-			shipGO.transform.position = Vector3.Lerp(shipGO.transform.position, CoordToPosition(ship.position), t);
+			float t = ((float)i / (float)nIter);
 			shipGO.transform.rotation = Quaternion.Lerp(shipGO.transform.rotation, Quaternion.Euler(0, 0, ship.orientation * 60 - 90), t);
-			yield return new WaitForSeconds(Time.deltaTime);
+			shipGO.transform.localPosition = Vector3.Lerp(CoordToPosition(oldShip.position), CoordToPosition(ship.position), t);
+			yield return new WaitForSecondsRealtime(0f);
+			i++;
 		}
 	}
 
@@ -314,37 +321,45 @@ public class GameManager : MonoBehaviour {
 		foreach (var anim in animationCoroutines.ToList())
 			StopCoroutine(animationCoroutines.Dequeue());
 		
-		//TODO: end animations of ghosts
+		//TODO: stop animations of ghosts
+	}
+
+	void ShowBoatGhostRound(int round, Color c)
+	{
+		GameReferee 				gr;
+		List< GameReferee.Player >	oldPlayers;
+
+		if (round > 0 && round < snapshots.Count)
+		{
+			snapshots[round].FastCheck(out gr, out oldPlayers);
+			foreach (var ship in oldPlayers[0].shipsAlive)
+			{
+				GameObject ghost;
+				if ((ghost = ghostBoatPool.Get(round)) == null)
+				{
+					ghost = ghostBoatPool.Set(Instantiate(playerShips[ship.id]), round);
+					ghost.transform.localScale = Vector3.one * .3f;
+				}
+				ghost.GetComponent< SpriteRenderer >().color = c;
+				// ghost.GetComponentsInChildren< SpriteRenderer >().color = c;
+				ghost.transform.GetChild(0).GetComponent< SpriteRenderer >().color = c;
+				ghost.transform.localPosition = CoordToPosition(ship.position);
+				ghost.transform.rotation = Quaternion.Euler(0, 0, ship.orientation * 60 - 90);
+				ghostBoatPool.Update(round);
+			}
+		}
 	}
 
 	void ShowPreviousBoatGhost()
 	{
-		for (int i = 0; i < previousFrameVisibility; i++)
-		{
-			GameReferee 				gr;
-			List< GameReferee.Player >	oldPlayers;
-
-			if (round - i > 0)
-			{
-				snapshots[round - i].FastCheck(out gr, out oldPlayers);
-				//instanciate ghosts
-			}
-		}
+		for (int i = 1; i < previousFrameVisibility; i++)
+			ShowBoatGhostRound(round - i, new Color(.5f, .5f, 1f, .4f));
 	}
 
 	void ShowFolowingAnimations()
 	{
-		for (int i = 0; i < folowingFrameVisibility; i++)
-		{
-			GameReferee 				gr;
-			List< GameReferee.Player >	oldPlayers;
-
-			if (round + i < snapshots.Count)
-			{
-				snapshots[round + i].FastCheck(out gr, out oldPlayers);
-				//instanciate ghosts
-			}
-		}
+		for (int i = 1; i < folowingFrameVisibility; i++)
+			ShowBoatGhostRound(round + i, new Color(1f, .5f, .5f, .4f));
 	}
 
 	void UpdateView()
@@ -361,6 +376,11 @@ public class GameManager : MonoBehaviour {
 		sliderUpdateDisabled = false;
 
 		UpdateVisualizator();
+
+		ghostBoatPool.SetUpdated(false);
+		ShowPreviousBoatGhost();
+		ShowFolowingAnimations();
+		ghostBoatPool.RemoveUnused(() => {});
 
 		StartAnimations();
 	}
@@ -422,9 +442,9 @@ public class GameManager : MonoBehaviour {
 					continue ;
 				if (g == null)
 					g = playerShips[ship.id] = InstanciateShip(ship.owner, ship.id);
-				g.transform.position = CoordToPosition(ship.position);
-				g.transform.rotation = Quaternion.Euler(0, 0, ship.orientation * 60 - 90);
-				i++;
+
+				//ship move is driven by animation
+
 				playerGUI.UpdatePlayerShipHealth(ship.owner, shipsPerPlayer, ship.id, ship.health);
 			}
 		}
