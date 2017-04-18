@@ -129,6 +129,14 @@ public class GameManager : MonoBehaviour {
 		StartCoroutine("ExecuteRound");
 	}
 
+	void		ReStartGame()
+	{
+		gameOver = false;
+		playerGUI.GameOver(true, false);
+		playerGUI.GameOver(false, false);
+		StartGame();
+	}
+
 	void		LoadResources()
 	{
 		orangeShips = new GameObject[3];
@@ -367,7 +375,7 @@ public class GameManager : MonoBehaviour {
 
 		foreach (var ship in ships.First())
 		{
-			int bounds = mineVisibilityRange - 1;
+			int bounds = mineVisibilityRange;
 			for (int x = -bounds; x <= bounds; x++)
 				for (int y = -bounds; y <= bounds; y++)
 				{
@@ -375,7 +383,7 @@ public class GameManager : MonoBehaviour {
 					int	ly = y + ship.position.y;
 					var point = new GameReferee.Coord(lx, ly);
 					if (lx < mapWidth && lx >= 0 && ly < mapHeight && ly >= 0)
-						if (ship.position.distanceTo(point) < mineVisibilityRange)
+						if (ship.position.distanceTo(point) < mineVisibilityRange + 1)
 							hexGrid.SetCellColorFilter(lx, ly, new Color(.15f, .15f, .15f));
 				}
 		}
@@ -468,12 +476,7 @@ public class GameManager : MonoBehaviour {
 	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Space) && gameOver)
-		{
-			gameOver = false;
-			playerGUI.GameOver(true, false);
-			playerGUI.GameOver(false, false);
-			StartGame();
-		}
+			ReStartGame();
 	}
 #endregion 
 
@@ -513,6 +516,12 @@ public class GameManager : MonoBehaviour {
 		g.transform.parent = debugGameObjectRoot;
 		g.transform.localPosition = GridToWorldPosition(x, y);
 		return g;
+	}
+
+	public static void SetShipDebugText(int shipId, string debug)
+	{
+		if (playerGUI != null)
+			playerGUI.UpdateShipDebugText(shipId, debug);
 	}
 #endregion
 
@@ -587,14 +596,14 @@ public class GameManager : MonoBehaviour {
 	{
 		enemyAIId = (enemyAIId == 0) ? enemyAIs.Length - 1 : enemyAIId - 1;
 		playerGUI.UpdateEnemyName(enemyAIs[enemyAIId].name);
-		// StartGame();
+		ReStartGame();
 	}
 
 	public void OnEnemyDownButtonClicked()
 	{
 		enemyAIId = ++enemyAIId % enemyAIs.Length;
 		playerGUI.UpdateEnemyName(enemyAIs[enemyAIId].name);
-		// StartGame();
+		ReStartGame();
 	}
 
 #endregion

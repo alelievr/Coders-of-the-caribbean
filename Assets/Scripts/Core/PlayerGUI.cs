@@ -27,6 +27,9 @@ public class PlayerGUI : MonoBehaviour {
 
 	[SpaceAttribute]
 	public Text		enemyNameText;
+	
+	[SpaceAttribute]
+	public Text[]	playerShipDebugTexts;
 
 	public void UpdatePlayerShipHealth(int player, int shipPerPlayer, int shipId, int health)
 	{
@@ -76,5 +79,10 @@ public class PlayerGUI : MonoBehaviour {
 	public void UpdateEnemyName(string name)
 	{
 		enemyNameText.text = name;
+	}
+
+	public void UpdateShipDebugText(int shipId, string debug)
+	{
+		playerShipDebugTexts[shipId].text = debug;
 	}
 }

@@ -13,6 +13,7 @@ public class MyAI : PlayerAI {
 		List< CannonBallData > cannonBalls)
 	{
 		string	ret = "";
+		int		shipId = 0;
 
 		var myShips = ships.Where(s => s.owner == 0 && s.health > 0);
 
@@ -28,6 +29,8 @@ public class MyAI : PlayerAI {
 				ret += "MOVE " + Random.Range(0, 22) + " " + Random.Range(0, 20) + ship;
 			if (ship != myShips.Last())
 				ret += "\n";
+
+			GameManager.SetShipDebugText(shipId++, "pos: " + ship.x + "/" + ship.y);
 		}
 
 		// GameManager.SetCellColor(Random.Range(0, 20), 0, Color.red);
