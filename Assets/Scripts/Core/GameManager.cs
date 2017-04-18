@@ -654,8 +654,7 @@ public class GameManager : MonoBehaviour {
 		if (paused)
 			return ;
 
-		Debug.Log("paused");
-		playerGUI.SetPauseButtonImage(paused);
+		playerGUI.SetPauseButtonImage(!paused);
 
 		StopCoroutine("ExecuteRound");
 		Time.timeScale = 0;
@@ -667,8 +666,7 @@ public class GameManager : MonoBehaviour {
 		if (!paused)
 			return ;
 		
-		Debug.Log("unpause");
-		playerGUI.SetPauseButtonImage(paused);
+		playerGUI.SetPauseButtonImage(!paused);
 
 		StartCoroutine("ExecuteRound");
 		Time.timeScale = 1;
