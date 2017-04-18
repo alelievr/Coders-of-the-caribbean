@@ -54,6 +54,9 @@ public class GameManager : MonoBehaviour {
 	static int			mapWidth;
 	static int			mapHeight;
 	int					round = 0;
+	bool				paused = false;
+	int					totalRounds;
+	bool				sliderUpdateDisabled = false;
 	bool				gameOver = false;
 	int					mineVisibilityRange;
 
@@ -73,7 +76,7 @@ public class GameManager : MonoBehaviour {
 
 	List< GameReferee.Player >		oldPlayers;
 
-	List< GameSnapshot >			snapshot = new List< GameSnapshot >();
+	Dictionary< int, GameSnapshot >			snapshots = new Dictionary< int, GameSnapshot >();
 #endregion
 
 #region Start and Initializaion
@@ -103,6 +106,8 @@ public class GameManager : MonoBehaviour {
 	{
 		Properties	props = new Properties();
 		
+		snapshots.Clear();
+		
 		props.put("seed", (randomSeed) ? Random.Range(-200000, 20000) : seed);
 		props.put("shipsPerPlayer", shipsPerPlayer);
 		//props.put("mineCount", mineCount);
@@ -115,7 +120,7 @@ public class GameManager : MonoBehaviour {
 
 		oldPlayers = players;
 
-		StartCoroutine(ExecuteRound());
+		StartCoroutine("ExecuteRound");
 	}
 
 	void		LoadResources()
@@ -156,8 +161,9 @@ public class GameManager : MonoBehaviour {
 			//update view
 			UpdateView();
 
-			//take a snapshot of the round
-			snapshot.Add(new GameSnapshot(referee, oldPlayers));
+			//take a snapshots of the round
+			Debug.Log("snapshot taken or round: " + round);
+			snapshots[round] = new GameSnapshot(referee, oldPlayers);
 
 			oldPlayers = players;
 
@@ -173,6 +179,7 @@ public class GameManager : MonoBehaviour {
 			}
 	
 			round++;
+			totalRounds = Mathf.Max(totalRounds, round);
 		}
 	}
 
@@ -252,6 +259,10 @@ public class GameManager : MonoBehaviour {
 		rumBarrels.Clear();
 		damages.Clear();
 		referee.getFrameDataForView(players, cannonBalls, mines, rumBarrels, damages);
+
+		sliderUpdateDisabled = true;
+		playerGUI.UpdateRoundNumber(round, totalRounds);
+		sliderUpdateDisabled = false;
 
 		UpdateVisualizator();
 	}
@@ -410,35 +421,70 @@ public class GameManager : MonoBehaviour {
 #endregion
 
 #region GUI Callbacks
+
 	//GUI callbacks:
 	public void OnFirstClicked()
 	{
-
+		round = 0;
+		snapshots[0].Restore(out referee, out oldPlayers);
+		UpdateView();
+		Pause();
+		round++;
+		UnPause();
 	}
 
 	public void OnPrevClicked()
 	{
-
-	}
-
-	public void OnNextClicked()
-	{
-
+		if (round != 0)
+		{
+			round--;
+			snapshots[round].Restore(out referee, out oldPlayers);
+			UpdateView();
+			Pause();
+		}
 	}
 
 	public void OnPlayClicked()
 	{
+		if (paused)
+		{
+			round++;
+			UnPause();
+		}
+		else
+			Pause();
+	}
 
+	public void OnNextClicked()
+	{
+		if (round < totalRounds - 1)
+		{
+			round++;
+			snapshots[round].Restore(out referee, out oldPlayers);
+			UpdateView();
+			Pause();
+		}
 	}
 
 	public void OnLastClicked()
 	{
-
+		snapshots.Last().Value.Restore(out referee, out oldPlayers);
+		round = snapshots.Count - 1;
+		UpdateView();
+		Pause();
+		round++;
+		UnPause();
 	}
 
 	public void OnRoundSliderValueChanged(float val)
 	{
-		
+		if (!sliderUpdateDisabled && val < snapshots.Count)
+		{
+			round = (int)val;
+			snapshots[(int)val].Restore(out referee, out oldPlayers);
+			Pause();
+			UpdateView();
+		}
 	}
 
 #endregion
@@ -463,5 +509,32 @@ public class GameManager : MonoBehaviour {
 
 		return (pos) + decal;
 	}
+	
+	void Pause()
+	{
+		if (paused)
+			return ;
+
+		Debug.Log("paused");
+		playerGUI.SetPauseButtonImage(paused);
+
+		StopCoroutine("ExecuteRound");
+		Time.timeScale = 0;
+		paused = true;
+	}
+
+	void UnPause()
+	{
+		if (!paused)
+			return ;
+		
+		Debug.Log("unpause");
+		playerGUI.SetPauseButtonImage(paused);
+
+		StartCoroutine("ExecuteRound");
+		Time.timeScale = 1;
+		paused = false;
+	}
+
 #endregion
 }

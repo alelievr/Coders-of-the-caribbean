@@ -20,6 +20,10 @@ public class PlayerGUI : MonoBehaviour {
 
 	[SpaceAttribute]
 	public Text		roundText;
+	public Slider	roundSlider;
+	public Image	pauseImageButton;
+	public Sprite	pauseSprite;
+	public Sprite	playSprite;
 
 	public void UpdatePlayerShipHealth(int player, int shipPerPlayer, int shipId, int health)
 	{
@@ -54,5 +58,15 @@ public class PlayerGUI : MonoBehaviour {
 	public void UpdateRoundNumber(int r, int total)
 	{
 		roundText.text = r + " / " + total;
+		roundSlider.maxValue = total;
+		roundSlider.value = r;
+	}
+
+	public void SetPauseButtonImage(bool paused)
+	{
+		if (paused)
+			pauseImageButton.sprite = pauseSprite;
+		else
+			pauseImageButton.sprite = playSprite;
 	}
 }

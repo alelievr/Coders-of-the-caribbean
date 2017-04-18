@@ -10,8 +10,7 @@ you also have `AddObjectAt` function if you want to add GameObjects over a cell 
 
 ### TODO
 + fix mine visibility visualization algorithm
++ display with boat ghost previous and folowing positions
 + on click on entity, get his informations
 + animation between two frames, fluidly moving ships and cannonballs
-+ save each rounds of the game so you can load any frame of the match.
-+ -> UI to pause / replay / select a round in a match
 + buttons to dynamically change object position / add new objects in the game

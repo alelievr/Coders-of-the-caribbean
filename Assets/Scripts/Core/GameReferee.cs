@@ -26,6 +26,7 @@ public class Properties : Dictionary< string, object >
     }
 }
 
+[System.Serializable]
 public class GameReferee {
 
     private static readonly int LEAGUE_LEVEL = 3;
@@ -120,6 +121,7 @@ public class GameReferee {
         return ret;
     }
 
+    [System.Serializable]
     public class Coord {
         private  static int[,] DIRECTIONS_EVEN = new int[,] { { 1, 0 }, { 0, -1 }, { -1, -1 }, { -1, 0 }, { -1, 1 }, { 0, 1 } };
         private  static int[,] DIRECTIONS_ODD = new int[,] { { 1, 0 }, { 1, -1 }, { 0, -1 }, { -1, 0 }, { 0, 1 }, { 1, 1 } };
@@ -196,6 +198,7 @@ public class GameReferee {
         }
     }
 
+    [System.Serializable]
     public class CubeCoordinate {
         static int[,] directions = new int[,] { { 1, -1, 0 }, { +1, 0, -1 }, { 0, +1, -1 }, { -1, +1, 0 }, { -1, 0, +1 }, { 0, -1, +1 } };
         int x, y, z;
@@ -233,6 +236,7 @@ public class GameReferee {
         SHIP, BARREL, MINE, CANNONBALL
     }
 
+    [System.Serializable]
     public abstract class Entity {
         public  int id;
         public  EntityType type;
@@ -253,6 +257,7 @@ public class GameReferee {
         }
     }
 
+    [System.Serializable]
     public class Mine : Entity {
         public Mine(int x, int y) : base(EntityType.MINE, x, y) {
         }
@@ -303,6 +308,7 @@ public class GameReferee {
         }
     }
 
+    [System.Serializable]
     public class Cannonball : Entity {
         public int ownerEntityId;
         public int srcX;
@@ -326,6 +332,7 @@ public class GameReferee {
         }
     }
 
+    [System.Serializable]
     public class RumBarrel : Entity {
         public int health;
 
@@ -342,6 +349,7 @@ public class GameReferee {
         }
     }
 
+    [System.Serializable]
     public class Damage {
         public  Coord position;
         public  int health;
@@ -362,6 +370,7 @@ public class GameReferee {
         FASTER, SLOWER, PORT, STARBOARD, FIRE, MINE
     }
 
+    [System.Serializable]
     public class Ship : Entity {
         public int orientation;
         public int speed;
@@ -611,6 +620,7 @@ public class GameReferee {
         }
     }
 
+    [System.Serializable]
     public class Player {
         public int id;
         public List<Ship> ships;
@@ -659,7 +669,6 @@ public class GameReferee {
     private int shipsPerPlayer;
     private int mineCount;
     private int barrelCount;
-    private Random random;
 
     public void initReferee(int playerCount, Properties prop) {
         UNIQUE_ENTITY_ID = 0;
