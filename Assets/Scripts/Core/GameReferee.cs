@@ -1225,30 +1225,6 @@ public class GameReferee {
         mines.AddRange(this.mines);
         rumBarrels.AddRange(this.barrels);
         damages.AddRange(this.damage);
-
-        /*List<String> data = new List< String >();
-
-        foreach (Player player in players) {
-            data.AddRange(player.toViewString());
-        }
-        data.Add("" + (cannonballs.Count));
-        foreach (Cannonball ball in cannonballs) {
-            data.Add(ball.toViewString());
-        }
-        data.Add("" + (mines.Count));
-        foreach (Mine mine in mines) {
-            data.Add(mine.toViewString());
-        }
-        data.Add("" + (barrels.Count));
-        foreach (RumBarrel barrel in barrels) {
-            data.Add(barrel.toViewString());
-        }
-        data.Add("" + (damage.Count));
-        foreach (Damage d in damage) {
-            data.Add(d.toViewString());
-        }
-
-        return data.ToArray();*/
     }
 
     public String getGameName() {

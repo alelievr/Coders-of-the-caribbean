@@ -162,7 +162,6 @@ public class GameManager : MonoBehaviour {
 			UpdateView();
 
 			//take a snapshots of the round
-			Debug.Log("snapshot taken or round: " + round);
 			snapshots[round] = new GameSnapshot(referee, oldPlayers);
 
 			oldPlayers = players;
@@ -276,13 +275,19 @@ public class GameManager : MonoBehaviour {
 				hexGrid.SetCellColorFilter(x, y, Color.black);
 
 		foreach (var ship in ships.First())
-			for (int x = 0; x < mapWidth; x++)
-				for (int y = 0; y < mapHeight; y++)
+		{
+			int bounds = mineVisibilityRange - 1;
+			for (int x = -bounds; x <= bounds; x++)
+				for (int y = -bounds; y <= bounds; y++)
 				{
-					if (Vector2.Distance(new Vector2(ship.position.x, ship.position.y), new Vector2(x, y)) < mineVisibilityRange)
-						if (x < mapWidth && x >= 0 && y < mapHeight && y >= 0)
-							hexGrid.SetCellColorFilter(x, y, new Color(.1f, .1f, .1f));
+					int	lx = x + ship.position.x;
+					int	ly = y + ship.position.y;
+					var point = new GameReferee.Coord(lx, ly);
+					if (lx < mapWidth && lx >= 0 && ly < mapHeight && ly >= 0)
+						if (ship.position.distanceTo(point) < mineVisibilityRange)
+							hexGrid.SetCellColorFilter(lx, ly, new Color(.15f, .15f, .15f));
 				}
+		}
 	}
 
 	IEnumerator fadeAndDestroy(GameObject g, int shipId)
