@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Diagnostics;
 using System.Linq;
 using Random = UnityEngine.Random;
-using Debug = UnityEngine.Debug	;
+using Debug = UnityEngine.Debug;
 
 public class GameManager : MonoBehaviour {
 
@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour {
 	public float	scaleY = 1.51f;
 
 	public static Transform	debugGameObjectRoot;
+	[HideInInspector]
 	public Transform	gameAssetRoot;
 
 	static int			mapWidth;
@@ -97,7 +98,7 @@ public class GameManager : MonoBehaviour {
 
 		rumBarrelPool = new GameObjectPool(GameReferee.MAX_RUM_BARRELS * 2);
 		minePool = new GameObjectPool(GameReferee.MAX_MINES * 2);
-		cannonBallPool = new GameObjectPool(GameReferee.MAX_SHIPS * 2);
+		cannonBallPool = new GameObjectPool(shipsPerPlayer * 2 * 10);
 		ghostBoatPool = new GameObjectPool(20 * 2);
 		playerShips = new GameObject[shipsPerPlayer * 2];
 
@@ -350,7 +351,7 @@ public class GameManager : MonoBehaviour {
 		//TODO: stop animations of ghosts
 	}
 
-	void ShowBoatGhostRound(int round, Color c)
+	void ShowBoatGhostRound(int round, Color c, int id)
 	{
 		GameReferee 				gr;
 		List< GameReferee.Player >	oldPlayers;
@@ -361,9 +362,9 @@ public class GameManager : MonoBehaviour {
 			foreach (var ship in oldPlayers[0].shipsAlive)
 			{
 				GameObject ghost;
-				if ((ghost = ghostBoatPool.Get(round)) == null)
+				if ((ghost = ghostBoatPool.Get(id)) == null)
 				{
-					ghost = ghostBoatPool.Set(Instantiate(playerShips[ship.id], gameAssetRoot), round);
+					ghost = ghostBoatPool.Set(Instantiate(playerShips[ship.id], gameAssetRoot), id);
 					ghost.transform.localScale = Vector3.one * .3f;
 				}
 				ghost.GetComponent< SpriteRenderer >().color = c;
@@ -371,21 +372,23 @@ public class GameManager : MonoBehaviour {
 				ghost.transform.GetChild(0).GetComponent< SpriteRenderer >().color = c;
 				ghost.transform.localPosition = CoordToPosition(ship.position);
 				ghost.transform.rotation = Quaternion.Euler(0, 0, ship.orientation * 60 - 90);
-				ghostBoatPool.Update(round);
+				ghostBoatPool.Update(id);
 			}
 		}
 	}
 
 	void ShowPreviousBoatGhost()
 	{
-		for (int i = 1; i < previousFrameVisibility; i++)
-			ShowBoatGhostRound(round - i, new Color(.5f, .5f, 1f, .4f));
+		int	id = folowingFrameVisibility + 1;
+		for (int i = 1; i < previousFrameVisibility + 1; i++)
+			ShowBoatGhostRound(round - i, new Color(.5f, .5f, 1f, .4f), id++);
 	}
 
 	void ShowFolowingAnimations()
 	{
-		for (int i = 1; i < folowingFrameVisibility; i++)
-			ShowBoatGhostRound(round + i, new Color(1f, .5f, .5f, .4f));
+		int id = 0;
+		for (int i = 1; i < folowingFrameVisibility + 1; i++)
+			ShowBoatGhostRound(round + i, new Color(1f, .5f, .5f, .4f), id++);
 	}
 
 	void UpdateView()
@@ -456,6 +459,7 @@ public class GameManager : MonoBehaviour {
 
 		minePool.SetUpdated(false);
 		rumBarrelPool.SetUpdated(false);
+		cannonBallPool.SetUpdated(false);
 
 		foreach (var player in players)
 		{
@@ -495,9 +499,19 @@ public class GameManager : MonoBehaviour {
 			i++;
 		}
 		i = 0;
+		Debug.Log("cannonBall size: " + cannonBalls.Count);
 		foreach (var cannonBall in cannonBalls)
 		{
+			GameObject g;
+			if ((g = cannonBallPool.Get(i)) == null)
+				g = cannonBallPool.Set(Instantiate(cannonBallPrefab, gameAssetRoot), i);
 
+			float dist = Vector2.Distance(new Vector2(cannonBall.srcX, cannonBall.srcY), new Vector2(cannonBall.position.x, cannonBall.position.y));
+			float t = (float)cannonBall.remainingTurns / (float)cannonBall.initialRemainingTurns;
+			g.transform.position = Vector3.Lerp(CoordToPosition(new GameReferee.Coord(cannonBall.srcX, cannonBall.srcY)), CoordToPosition(cannonBall.position), t);
+
+			cannonBallPool.Update(i);
+			i++;
 		}
 		foreach (var damage in damages)
 		{

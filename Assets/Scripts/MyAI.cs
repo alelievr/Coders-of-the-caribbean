@@ -13,7 +13,6 @@ public class MyAI : PlayerAI {
 		List< CannonBallData > cannonBalls)
 	{
 		string	ret = "";
-		int		shipId = 0;
 
         var myShips = ships.Where(s => s.health > 0 && s.owner == 1);
         var enemyShips = ships.Where(s => s.health > 0 && s.owner == 0);
