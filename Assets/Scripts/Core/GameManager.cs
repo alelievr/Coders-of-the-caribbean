@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour {
 	public float	scaleY = 1.51f;
 
 	public static Transform	debugGameObjectRoot;
+	public Transform	gameAssetRoot;
 
 	static int			mapWidth;
 	static int			mapHeight;
@@ -107,6 +108,9 @@ public class GameManager : MonoBehaviour {
 		debugGameObjectRoot.parent = hexGrid.transform;
 		debugGameObjectRoot.localPosition = Vector3.zero;
 
+		gameAssetRoot = new GameObject("Runtime Assets").transform;
+		gameAssetRoot.position = Vector3.zero;
+
 		LoadResources();
 
 		StartGame();
@@ -118,23 +122,30 @@ public class GameManager : MonoBehaviour {
 		
 		snapshots.Clear();
 		
+		round = 0;
+		totalRounds = 0;
+		
 		props.put("seed", (randomSeed) ? Random.Range(-200000, 20000) : seed);
 		props.put("shipsPerPlayer", shipsPerPlayer);
 		//props.put("mineCount", mineCount);
 		//props.put("barrelCount", barrelCount);
 
 		referee.initReferee(2, props);
+		referee.updateGame(round);
 
 		InitVisualizator(referee.getInitDataForView());
 		UpdateView();
 
 		oldPlayers = GameSnapshot.CloneObject< List< GameReferee.Player > >(players);
 
-		StartCoroutine("ExecuteRound");
+		//start game if not paused
+		if (!paused)
+			StartCoroutine("ExecuteRound");
 	}
 
 	void		ReStartGame()
 	{
+		Pause();
 		gameOver = false;
 		playerGUI.GameOver(true, false);
 		playerGUI.GameOver(false, false);
@@ -159,11 +170,17 @@ public class GameManager : MonoBehaviour {
 
 	IEnumerator ExecuteRound()
 	{
+		if (gameOver)
+			yield break;
+		
 		while (true)
 		{
 			yield return new WaitForSeconds(timeBetweenTurns);
 	
 			referee.prepare(round);
+
+			//remove all cell texts
+			hexGrid.ClearTexts();
 
 			//execute players AI
 			var firstPlayerOutput = ExecutePlayerActions(playerAI, FIRST_PLAYER);
@@ -273,17 +290,26 @@ public class GameManager : MonoBehaviour {
 	IEnumerator ShipAnimation(GameReferee.Ship ship, GameReferee.Ship oldShip)
 	{
 		GameObject shipGO = playerShips[ship.id];
-		if (shipGO == null || ship == null || oldShip == null)
-			yield return null;
+		int			nIter = Mathf.RoundToInt(timeBetweenTurns / FRAME_DELAY_60FPS);
+		int			i = 0;
 
-		int		nIter = Mathf.RoundToInt(timeBetweenTurns / FRAME_DELAY_60FPS);
-		int		i = 0;
+		if (shipGO == null || ship == null || oldShip == null)
+			yield break;
 
 		shipGO.transform.position = CoordToPosition(oldShip.position);
 
-		while (i != nIter)
+		//if time is paused, do not start animations
+		if (paused)
+			yield break;
+		
+		if (nIter == 0)
+			nIter++;
+		
+		while (i < nIter)
 		{
 			float t = ((float)i / (float)nIter);
+			if (nIter == 1)
+				t = 1;
 			shipGO.transform.rotation = Quaternion.Lerp(shipGO.transform.rotation, Quaternion.Euler(0, 0, ship.orientation * 60 - 90), t);
 			shipGO.transform.localPosition = Vector3.Lerp(CoordToPosition(oldShip.position), CoordToPosition(ship.position), t);
 			yield return new WaitForSecondsRealtime(0f);
@@ -337,7 +363,7 @@ public class GameManager : MonoBehaviour {
 				GameObject ghost;
 				if ((ghost = ghostBoatPool.Get(round)) == null)
 				{
-					ghost = ghostBoatPool.Set(Instantiate(playerShips[ship.id]), round);
+					ghost = ghostBoatPool.Set(Instantiate(playerShips[ship.id], gameAssetRoot), round);
 					ghost.transform.localScale = Vector3.one * .3f;
 				}
 				ghost.GetComponent< SpriteRenderer >().color = c;
@@ -453,7 +479,7 @@ public class GameManager : MonoBehaviour {
 		{
 			GameObject g;
 			if ((g = rumBarrelPool.Get(i)) == null)
-				g = rumBarrelPool.Set(Instantiate(rumBarrelPrefab), i);
+				g = rumBarrelPool.Set(Instantiate(rumBarrelPrefab, gameAssetRoot), i);
 			g.transform.position = CoordToPosition(rumBarrel.position);
 			rumBarrelPool.Update(i);
 			i++;
@@ -463,7 +489,7 @@ public class GameManager : MonoBehaviour {
 		{
 			GameObject g;
 			if ((g = minePool.Get(i)) == null)
-				g = minePool.Set(Instantiate(minePrefab), i);
+				g = minePool.Set(Instantiate(minePrefab, gameAssetRoot), i);
 			g.transform.position = CoordToPosition(mine.position);
 			minePool.Update(i);
 			i++;
@@ -475,7 +501,7 @@ public class GameManager : MonoBehaviour {
 		}
 		foreach (var damage in damages)
 		{
-			GameObject g = Instantiate(explosionPrefab, CoordToPosition(damage.position), Quaternion.identity);
+			GameObject g = Instantiate(explosionPrefab, CoordToPosition(damage.position), Quaternion.identity, gameAssetRoot);
 			Destroy(g, 1);
 		}
 
@@ -496,7 +522,10 @@ public class GameManager : MonoBehaviour {
 	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Space) && gameOver)
+		{
 			ReStartGame();
+			UnPause();
+		}
 	}
 #endregion 
 
@@ -638,9 +667,9 @@ public class GameManager : MonoBehaviour {
 	GameObject InstanciateShip(int owner, int id)
 	{
 		if (owner == FIRST_PLAYER)
-			return Instantiate(orangeShips[id]);
+			return Instantiate(orangeShips[id], gameAssetRoot);
 		else
-			return Instantiate(redShips[id - shipsPerPlayer]);
+			return Instantiate(redShips[id - shipsPerPlayer], gameAssetRoot);
 	}
 
 	Vector2	CoordToPosition(GameReferee.Coord position)
@@ -657,12 +686,12 @@ public class GameManager : MonoBehaviour {
 	
 	void Pause()
 	{
+		StopCoroutine("ExecuteRound");
+
 		if (paused)
 			return ;
 
 		playerGUI.SetPauseButtonImage(!paused);
-
-		StopCoroutine("ExecuteRound");
 		Time.timeScale = 0;
 		paused = true;
 	}

@@ -3,7 +3,7 @@ using UnityEditor;
 
 public class HexGrid : MonoBehaviour {
 
-    // int width;
+    int width;
     int height;
 
     public HexCell		cellPrefab;
@@ -14,7 +14,7 @@ public class HexGrid : MonoBehaviour {
     HexMesh			hexMesh;
 
 	public void BuildHexMap (int width, int height) {
-		// this.width = width;
+		this.width = width;
 		this.height = height;
 
 		cells = new HexCell[width, height];
@@ -66,5 +66,13 @@ public class HexGrid : MonoBehaviour {
 		}
 		texts[x, y].text = text;
 		texts[x, y].color = c;
+	}
+
+	public void ClearTexts()
+	{
+		for (int x = 0; x < width; x++)
+			for (int y = 0; y < height; y++)
+				if (texts[x, y] != null)
+					texts[x, y].text = "";
 	}
 }
