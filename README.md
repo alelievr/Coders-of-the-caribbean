@@ -83,9 +83,7 @@ GameManager.HexDistance | calcul the distances between two cells
 :warning: both cell text and color are reset every rounds so you need to draw everything you need at each rounds.
 
 ### Screens
-![screenshot1](https://image.noelshack.com/fichiers/2017/16/1492714606-screen-shot-2017-04-20-at-8-35-21-pm.png)
-
-![screenshot2](https://image.noelshack.com/fichiers/2017/16/1492714572-screen-shot-2017-04-20-at-8-54-52-pm.png)
+![screenshot1](https://image.noelshack.com/fichiers/2017/16/1492716715-screen-shot-2017-04-20-at-9-30-55-pm.png)
 
 ### TODO
 + on click on entity, get his informations
