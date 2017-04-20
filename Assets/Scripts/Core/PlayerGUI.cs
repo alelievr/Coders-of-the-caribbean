@@ -39,15 +39,16 @@ public class PlayerGUI : MonoBehaviour {
 
 	public void UpdatePlayerShipHealth(int player, int shipPerPlayer, int shipId, int health)
 	{
-		if (player == 0)
+		shipId /= 2;
+		if (player == GameManager.FIRST_PLAYER)
 		{
 			orangeShipHealthImages[shipId].fillAmount = (health / 100f);
 			orangeShipHealthTexts[shipId].text = health.ToString();
 		}
 		else
 		{
-			redShipHealthImages[shipId - player * shipPerPlayer].fillAmount = (health / 100f);
-			redShipHealthTexts[shipId - player * shipPerPlayer].text = health.ToString();
+			redShipHealthImages[shipId].fillAmount = (health / 100f);
+			redShipHealthTexts[shipId].text = health.ToString();
 		}
 	}
 

@@ -14,15 +14,17 @@ public class GameManager : MonoBehaviour {
 
 	[Space()]
 	[Header("Game Config")]
-	public int		playerCount = 2;
-	public int		shipsPerPlayer = 1;
-	public int		mineCount = 0;
-	public int		barrelCount = 5;
+	public bool		randomShipPerPlayer = true;
+	public int		shipsPerPlayer = 3;
+	public bool		randomMineCount = true;
+	public int		mineCount = 6;
+	public bool		randomBarrelCount = true;
+	public int		barrelCount = 10;
+	public bool		randomSeed = true;
+	public int		seed = 42;
 
 	[Space()]
 	[Header("Settings")]
-	public bool		randomSeed = true;
-	public int		seed = 42;
 	[Range(0, 3f)]
 	public float	timeBetweenTurns = .5f;
 	[Range(0, 6)]
@@ -39,10 +41,10 @@ public class GameManager : MonoBehaviour {
 	public GameObject	cannonShootPrefab;
 	public GameObject	ploufPrefab;
 	
+	public const int		FIRST_PLAYER = 1;
+	public const int		SECOND_PLAYER = 0;
+	
 #region Internal manager variables
-	const int		FIRST_PLAYER = 0;
-	const int		SECOND_PLAYER = 1;
-
 	int				enemyAIId = 0;
 	int				playerAIId = 0;
 
@@ -113,8 +115,8 @@ public class GameManager : MonoBehaviour {
 		rumBarrelPool = new GameObjectPool(GameReferee.MAX_RUM_BARRELS * 2);
 		minePool = new GameObjectPool(GameReferee.MAX_MINES * 2);
 		cannonBallPool = new GameObjectPool(shipsPerPlayer * 2 * 10);
-		ghostBoatPool = new GameObjectPool(20 * 2);
-		playerShips = new GameObject[shipsPerPlayer * 2];
+		ghostBoatPool = new GameObjectPool(60 * 2);
+		playerShips = new GameObject[3 * 2];
 
 		hexGrid = FindObjectOfType< HexGrid >();
 		playerGUI = FindObjectOfType< PlayerGUI >();
@@ -145,9 +147,9 @@ public class GameManager : MonoBehaviour {
 		totalRounds = 0;
 		
 		props.put("seed", (randomSeed) ? Random.Range(-200000, 2000000) : seed);
-		props.put("shipsPerPlayer", shipsPerPlayer);
-		//props.put("mineCount", mineCount);
-		//props.put("barrelCount", barrelCount);
+		props.put("shipsPerPlayer", (randomShipPerPlayer) ? Random.Range(1, 4) : shipsPerPlayer);
+		props.put("mineCount", (randomMineCount) ? Random.Range(5, 11) : mineCount);
+		props.put("barrelCount", (randomBarrelCount) ? Random.Range(10, 27) : barrelCount);
 
 		referee.initReferee(2, props);
 		referee.updateGame(round);
@@ -222,12 +224,12 @@ public class GameManager : MonoBehaviour {
 
 			oldPlayers = GameSnapshot.CloneObject< List< GameReferee.Player > >(players);
 
-			if (referee.isPlayerDead(0))
+			if (referee.isPlayerDead(FIRST_PLAYER))
 			{
 				GameOver(false);
 				break ;
 			}
-			else if (referee.isPlayerDead(1))
+			else if (referee.isPlayerDead(SECOND_PLAYER))
 			{
 				GameOver(true);
 				break ;
@@ -444,21 +446,23 @@ public class GameManager : MonoBehaviour {
 		if (round >= 0 && snapshots.ContainsKey(round))
 		{
 			snapshots[round].FastCheck(out gr, out oldPlayers, out cannonBalls);
-			foreach (var ship in oldPlayers[0].shipsAlive)
-			{
-				GameObject ghost;
-				if ((ghost = ghostBoatPool.Get(id)) == null)
+			foreach (var firstPlayerShips in oldPlayers.Where(o => o.id % 2 == 1).Select(p => p.shipsAlive))
+				foreach (var ship in firstPlayerShips)
 				{
-					ghost = ghostBoatPool.Set(Instantiate(playerShips[ship.id], gameAssetRoot), id);
-					ghost.transform.localScale = Vector3.one * .3f;
+					id = id + ship.id / 2;
+					GameObject ghost;
+					if ((ghost = ghostBoatPool.Get(id)) == null)
+					{
+						ghost = ghostBoatPool.Set(Instantiate(playerShips[ship.id / 2], gameAssetRoot), id);
+						ghost.transform.localScale = Vector3.one * .3f;
+					}
+					ghost.GetComponent< SpriteRenderer >().color = c;
+					// ghost.GetComponentsInChildren< SpriteRenderer >().color = c;
+					ghost.transform.GetChild(0).GetComponent< SpriteRenderer >().color = c;
+					ghost.transform.localPosition = CoordToPosition(ship.position);
+					ghost.transform.rotation = Quaternion.Euler(0, 0, ship.orientation * 60 - 90);
+					ghostBoatPool.Update(id);
 				}
-				ghost.GetComponent< SpriteRenderer >().color = c;
-				// ghost.GetComponentsInChildren< SpriteRenderer >().color = c;
-				ghost.transform.GetChild(0).GetComponent< SpriteRenderer >().color = c;
-				ghost.transform.localPosition = CoordToPosition(ship.position);
-				ghost.transform.rotation = Quaternion.Euler(0, 0, ship.orientation * 60 - 90);
-				ghostBoatPool.Update(id);
-			}
 		}
 	}
 
@@ -466,14 +470,14 @@ public class GameManager : MonoBehaviour {
 	{
 		int	id = folowingFrameVisibility + 1;
 		for (int i = 1; i < previousFrameVisibility + 1; i++)
-			ShowBoatGhostRound(round - i, new Color(.5f, .5f, 1f, .4f), id++);
+			ShowBoatGhostRound(round - i, new Color(.5f, .5f, 1f, .4f), id += 1);
 	}
 
 	void ShowFolowingAnimations()
 	{
 		int id = 0;
 		for (int i = 1; i < folowingFrameVisibility + 1; i++)
-			ShowBoatGhostRound(round + i, new Color(1f, .5f, .5f, .4f), id++);
+			ShowBoatGhostRound(round + i, new Color(1f, .5f, .5f, .4f), id += 1);
 	}
 
 	void UpdateView()
@@ -590,6 +594,7 @@ public class GameManager : MonoBehaviour {
 			if ((g = cannonBallPool.Get(i)) == null)
 			{
 				g = cannonBallPool.Set(Instantiate(cannonBallPrefab, gameAssetRoot), i);
+				Debug.Log("cannonBall !");
 				Destroy(Instantiate(ploufPrefab, g.transform.position, Quaternion.identity, gameAssetRoot), 1);
 			}
 
@@ -781,9 +786,9 @@ public class GameManager : MonoBehaviour {
 	GameObject InstanciateShip(int owner, int id)
 	{
 		if (owner == FIRST_PLAYER)
-			return Instantiate(orangeShips[id], gameAssetRoot);
+			return Instantiate(orangeShips[id / 2], gameAssetRoot);
 		else
-			return Instantiate(redShips[id - shipsPerPlayer], gameAssetRoot);
+			return Instantiate(redShips[id / 2 + 1], gameAssetRoot);
 	}
 
 	Vector2	CoordToPosition(GameReferee.Coord position)

@@ -43,12 +43,22 @@ public class HexGrid : MonoBehaviour {
 
 	public void SetCellColor(int x, int y, Color c)
 	{
+		if (x < 0 || x >= cells.GetLength(0) || y < 0 || y >= cells.GetLength(1))
+		{
+			Debug.LogWarning("invalid cell position: " + x + "/" + y);
+			return ;
+		}
 		y = height - y - 1;
-		cells[x, y].color = c;
+			cells[x, y].color = c;
 	}
 
 	public void SetCellColorFilter(int x, int y, Color c)
 	{
+		if (x < 0 || x >= cells.GetLength(0) || y < 0 || y >= cells.GetLength(1))
+		{
+			Debug.LogWarning("invalid cell position: " + x + "/" + y);
+			return ;
+		}
 		y = height - y - 1;
 		cells[x, y].colorFilter = c;
 	}
