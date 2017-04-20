@@ -7,6 +7,8 @@ using UnityEngine;
  **/
 public class PlayerAI : MonoBehaviour
 {
+    public bool playTurnInputOverride = false;
+
 	public virtual string PlayTurn(
         int myShipCount, int entityCount,
         List< ShipData > ships,
@@ -21,4 +23,17 @@ public class PlayerAI : MonoBehaviour
 
         return ret;
     }
+
+    public virtual string PlayTurn(int myShipCount, int entityCount, string[] inputs)
+    {
+        string  ret = "";
+
+        for (int i = 0; i < myShipCount; i++)
+            ret += "MOVE 11 10";
+        
+        playTurnInputOverride = true;
+
+        return ret;
+    }
+
 }

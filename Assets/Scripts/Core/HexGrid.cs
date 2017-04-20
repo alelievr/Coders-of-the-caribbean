@@ -13,6 +13,8 @@ public class HexGrid : MonoBehaviour {
 	TextMesh[,]		texts;
     HexMesh			hexMesh;
 
+	public static Color	defaultCellColor = new Color32(0x0A, 0x16, 0x5F, 0xFF);
+
 	public void BuildHexMap (int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -74,5 +76,12 @@ public class HexGrid : MonoBehaviour {
 			for (int y = 0; y < height; y++)
 				if (texts[x, y] != null)
 					texts[x, y].text = "";
+	}
+
+	public void ClearColors()
+	{
+		for (int x = 0; x < width; x++)
+			for (int y = 0; y < height; y++)
+				cells[x, y].color = defaultCellColor;
 	}
 }

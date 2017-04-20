@@ -182,6 +182,7 @@ public class GameManager : MonoBehaviour {
 
 			//remove all cell texts
 			hexGrid.ClearTexts();
+			hexGrid.ClearColors();
 
 			//execute players AI
 			var firstPlayerOutput = ExecutePlayerActions(playerAI, FIRST_PLAYER);
@@ -233,43 +234,56 @@ public class GameManager : MonoBehaviour {
 		
         playerShipCount = int.Parse(playerInput[0]);
 		entityCount = int.Parse(playerInput[1]);
-        for (int i = 0; i < entityCount; i++)
-        {
-            string[] inputs = playerInput[i + 2].Split(' ');
-            int entityId = int.Parse(inputs[0]);
+    
+		if (!ai.playTurnInputOverride)
+		{
+			string[] inputs = playerInput.Skip(2).ToArray();
+			Stopwatch	st = new Stopwatch();
+			st.Start();
 
-            string entityType = inputs[1];
-            int x = int.Parse(inputs[2]);
-            int y = int.Parse(inputs[3]);
+			playerOutput = ai.PlayTurn(playerShipCount, entityCount, inputs);
+			st.Stop();
+			playerGUI.UpdateCalculTime(playerIndex, (int)st.ElapsedMilliseconds);
+		}
+		else
+		{
+		    for (int i = 0; i < entityCount; i++)
+        	{
+            	string[] inputs = playerInput[i + 2].Split(' ');
+            	int entityId = int.Parse(inputs[0]);
 
-            int arg1 = int.Parse(inputs[4]);
-            int arg2 = int.Parse(inputs[5]);
-            int arg3 = int.Parse(inputs[6]);
-            int arg4 = int.Parse(inputs[7]);
+	            string entityType = inputs[1];
+    	        int x = int.Parse(inputs[2]);
+        	    int y = int.Parse(inputs[3]);
+			
+        		int arg1 = int.Parse(inputs[4]);
+            	int arg2 = int.Parse(inputs[5]);
+            	int arg3 = int.Parse(inputs[6]);
+            	int arg4 = int.Parse(inputs[7]);
 
-			switch (entityType)
-			{
-				case "SHIP":
-					ships.Add(new ShipData(x, y, entityId, arg1, arg2, arg3, arg4));
-					break;
-				case "MINE":
-					mines.Add(new MineData(x, y, entityId));
-					break ;
-				case "CANNONBALL":
-					cannonBalls.Add(new CannonBallData(x, y, entityId, arg1, arg2));
-					break ;
-				case "BARREL":
-					rumBarrels.Add(new RumBarrelData(x, y, entityId, arg1));
-					break ;
-			}
-        }
+				switch (entityType)
+				{
+					case "SHIP":
+						ships.Add(new ShipData(x, y, entityId, arg1, arg2, arg3, arg4));
+						break;
+					case "MINE":
+						mines.Add(new MineData(x, y, entityId));
+						break ;
+					case "CANNONBALL":
+						cannonBalls.Add(new CannonBallData(x, y, entityId, arg1, arg2));
+						break ;
+					case "BARREL":
+						rumBarrels.Add(new RumBarrelData(x, y, entityId, arg1));
+						break ;
+				}
+	        }
 		
-		Stopwatch	st = new Stopwatch();
-		st.Start();
-		playerOutput = ai.PlayTurn(playerShipCount, entityCount, ships, rumBarrels, mines, cannonBalls);
-		st.Stop();
-		playerGUI.UpdateCalculTime(playerIndex, (int)st.ElapsedMilliseconds);
-
+			Stopwatch	st = new Stopwatch();
+			st.Start();
+			playerOutput = ai.PlayTurn(playerShipCount, entityCount, ships, rumBarrels, mines, cannonBalls);
+			st.Stop();
+			playerGUI.UpdateCalculTime(playerIndex, (int)st.ElapsedMilliseconds);
+		}
 		return playerOutput.Split('\n');
 	}
 #endregion
@@ -499,7 +513,6 @@ public class GameManager : MonoBehaviour {
 			i++;
 		}
 		i = 0;
-		Debug.Log("cannonBall size: " + cannonBalls.Count);
 		foreach (var cannonBall in cannonBalls)
 		{
 			GameObject g;
