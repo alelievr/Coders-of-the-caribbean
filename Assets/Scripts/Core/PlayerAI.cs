@@ -5,10 +5,25 @@ using UnityEngine;
  * Auto-generated code below aims at helping you parse
  * the standard input according to the problem statement.
  **/
+
+public enum LeagueLevel
+{
+    WOOD,
+    BRONZE,
+    SILVER,
+    GOLD,
+    LEGEND
+}
+
 public class PlayerAI : MonoBehaviour
 {
     [HideInInspector]
-    public bool playTurnInputOverride = false;
+    public bool         playTurnInputOverride = false;
+
+    public virtual LeagueLevel GetLeagueLevel()
+    {
+        return LeagueLevel.WOOD;
+    }
 
 	public virtual string PlayTurn(
         int myShipCount, int entityCount,

@@ -105,6 +105,11 @@ public class GameManager : MonoBehaviour {
 		playerAIId = PlayerPrefs.GetInt(PLAYER_AI_ID_KEY, 0);
 		enemyAIId = PlayerPrefs.GetInt(ENEMY_AI_ID_KEY, 0);
 
+		if (playerAIId >= playerAIs.Length)
+			playerAIId = 0;
+		if (enemyAIId >= enemyAIs.Length)
+			enemyAIId = 0;
+
 		rumBarrelPool = new GameObjectPool(GameReferee.MAX_RUM_BARRELS * 2);
 		minePool = new GameObjectPool(GameReferee.MAX_MINES * 2);
 		cannonBallPool = new GameObjectPool(shipsPerPlayer * 2 * 10);
@@ -134,6 +139,7 @@ public class GameManager : MonoBehaviour {
 		
 		playerGUI.UpdatePlayerName(playerAIs[playerAIId].name);
 		playerGUI.UpdateEnemyName(enemyAIs[enemyAIId].name);
+		playerGUI.UpdateEnemyLeagueLevel(enemyAIs[enemyAIId].GetLeagueLevel());
 		
 		round = 0;
 		totalRounds = 0;
@@ -382,6 +388,8 @@ public class GameManager : MonoBehaviour {
 			float t = ((float)i / (float)nIter);
 			cannonBallGO.transform.position = Vector3.Lerp(startTurnPos, endTurnPos, t);
 			yield return new WaitForSeconds(0f);
+			if (cannonBallGO == null)
+				yield break ;
 			i++;
 		}
 	}

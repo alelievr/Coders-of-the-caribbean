@@ -32,6 +32,11 @@ public class PlayerGUI : MonoBehaviour {
 	[SpaceAttribute]
 	public Text[]	playerShipDebugTexts;
 
+	[SpaceAttribute]
+	public Image	enemyAvatar;
+	public Text		enemyLeagueLevel;
+	public Sprite[]	leagueLevels;
+
 	public void UpdatePlayerShipHealth(int player, int shipPerPlayer, int shipId, int health)
 	{
 		if (player == 0)
@@ -90,5 +95,11 @@ public class PlayerGUI : MonoBehaviour {
 	public void UpdateShipDebugText(int shipId, string debug)
 	{
 		playerShipDebugTexts[shipId].text = debug;
+	}
+
+	public void UpdateEnemyLeagueLevel(LeagueLevel ll)
+	{
+		enemyLeagueLevel.text = ll.ToString();
+		enemyAvatar.sprite = leagueLevels[(int)ll];
 	}
 }
