@@ -11,7 +11,7 @@ public class HexCell {
     public HexCell(int x, int y, Vector3 center)
     {
         coordinates = HexCoordinates.FromOffsetCoordinates(x, y);
-        color = new Color32(0x0A, 0x16, 0x5F, 0xFF);
+        color = HexGrid.defaultCellColor;
         colorFilter = new Color(0, 0, 0, 0);
         this.center = center;
     }

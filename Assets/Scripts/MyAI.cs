@@ -6,7 +6,7 @@ using System.Linq;
 public class MyAI : PlayerAI {
 
 	public override string PlayTurn(
-		int myShipCount, int enemyShipCount,
+		int myShipCount, int entityCount,
 		List< ShipData > ships,
         List< RumBarrelData > rumBarrels,
 		List< MineData > mines,
