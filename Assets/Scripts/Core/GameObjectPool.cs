@@ -20,13 +20,13 @@ public class GameObjectPool {
 		updated = new bool[n];
 	}
 
-	public void RemoveUnused(Action onDestroy)
+	public void RemoveUnused(Action< GameObject > onDestroy)
 	{
 		for (int i = 0; i < objects.Length; i++)
 		{
 			if (updated[i] == false && objects[i] != null)
 			{
-				onDestroy();
+				onDestroy(objects[i]);
 				GameObject.Destroy(objects[i]);
 			}
 		}
@@ -47,5 +47,4 @@ public class GameObjectPool {
 	{
 		return objects[i];
 	}
-
 }

@@ -8,41 +8,39 @@ public class GameSnapshot {
 
 	public GameReferee					referee;
 	public List< GameReferee.Player >	oldPlayers;
+	public List< GameReferee.Cannonball > cannonBalls;
 	
 	MemoryStream stream = new MemoryStream(1024);
+	BinaryFormatter	bf = new BinaryFormatter();
 
-	public GameSnapshot(GameReferee gr, List< GameReferee.Player > op)
+	T Clone< T >(T obj)
 	{
-		BinaryFormatter	bf = new BinaryFormatter();
-		
 		stream.Seek(0, SeekOrigin.Begin);
-		bf.Serialize(stream, gr);
+		bf.Serialize(stream, obj);
 		stream.Seek(0, SeekOrigin.Begin);
-		referee = bf.Deserialize(stream) as GameReferee;
-		stream.Seek(0, SeekOrigin.Begin);
-		bf.Serialize(stream, op);
-		stream.Seek(0, SeekOrigin.Begin);
-		oldPlayers = bf.Deserialize(stream) as List< GameReferee.Player >;
+		T ret = (T)bf.Deserialize(stream);
+		return ret;
 	}
 
-	public void Restore(out GameReferee gr, out List< GameReferee.Player > op)
+	public GameSnapshot(GameReferee gr, List< GameReferee.Player > ops, List< GameReferee.Cannonball > cbs)
 	{
-		BinaryFormatter	bf = new BinaryFormatter();
-		
-		stream.Seek(0, SeekOrigin.Begin);
-		bf.Serialize(stream, referee);
-		stream.Seek(0, SeekOrigin.Begin);
-		gr = bf.Deserialize(stream) as GameReferee;
-		stream.Seek(0, SeekOrigin.Begin);
-		bf.Serialize(stream, oldPlayers);
-		stream.Seek(0, SeekOrigin.Begin);
-		op = bf.Deserialize(stream) as List< GameReferee.Player >;
+		referee = Clone< GameReferee >(gr);
+		oldPlayers = Clone< List< GameReferee.Player > >(ops);
+		cannonBalls = Clone< List< GameReferee.Cannonball > >(cbs);
 	}
 
-	public void FastCheck(out GameReferee gr, out List< GameReferee.Player > op)
+	public void Restore(out GameReferee gr, out List< GameReferee.Player > ops, out List< GameReferee.Cannonball > cbs)
+	{
+		gr = Clone< GameReferee >(referee);
+		ops = Clone< List< GameReferee.Player > >(oldPlayers);
+		cbs = Clone< List< GameReferee.Cannonball > >(cannonBalls);
+	}
+
+	public void FastCheck(out GameReferee gr, out List< GameReferee.Player > op, out List< GameReferee.Cannonball > cbs)
 	{
 		gr = referee;
 		op = oldPlayers;
+		cbs = cannonBalls;
 	}
 
 	public static T CloneObject< T >(T obj)

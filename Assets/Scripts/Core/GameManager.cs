@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject	explosionPrefab;
 	public GameObject	cannonBallPrefab;
 	public GameObject	cannonShootPrefab;
+	public GameObject	ploufPrefab;
 	
 #region Internal manager variables
 	const int		FIRST_PLAYER = 0;
@@ -198,7 +199,7 @@ public class GameManager : MonoBehaviour {
 			UpdateView();
 
 			//take a snapshots of the round
-			snapshots[round] = new GameSnapshot(referee, oldPlayers);
+			snapshots[round] = new GameSnapshot(referee, oldPlayers, cannonBalls);
 
 			oldPlayers = GameSnapshot.CloneObject< List< GameReferee.Player > >(players);
 
@@ -304,16 +305,54 @@ public class GameManager : MonoBehaviour {
 			yield break;
 		
 		if (nIter == 0)
-			nIter++;
+		{
+			nIter = 1;
+			i = 1;
+		}
 		
-		while (i < nIter)
+		while (i <= nIter)
 		{
 			float t = ((float)i / (float)nIter);
-			if (nIter == 1)
-				t = 1;
 			shipGO.transform.rotation = Quaternion.Lerp(shipGO.transform.rotation, Quaternion.Euler(0, 0, ship.orientation * 60 - 90), t);
 			shipGO.transform.localPosition = Vector3.Lerp(CoordToPosition(oldShip.position), CoordToPosition(ship.position), t);
 			yield return new WaitForSecondsRealtime(0f);
+			i++;
+		}
+	}
+
+	IEnumerator CannonBallAnimation(GameReferee.Cannonball cannonBall, GameObject cannonBallGO)
+	{
+		int			nIter = Mathf.RoundToInt(timeBetweenTurns / FRAME_DELAY_60FPS);
+		int			i = 0;
+
+		if (cannonBall.remainingTurns == 0)
+			yield break ;
+
+		float dist = Vector2.Distance(new Vector2(cannonBall.srcX, cannonBall.srcY), new Vector2(cannonBall.position.x, cannonBall.position.y));
+		float t1 = (float)(cannonBall.remainingTurns - 1) / (float)cannonBall.initialRemainingTurns;
+		float t2 = (float)(cannonBall.remainingTurns) / (float)cannonBall.initialRemainingTurns;
+		cannonBallGO.transform.position = Vector3.Lerp(CoordToPosition(new GameReferee.Coord(cannonBall.srcX, cannonBall.srcY)), CoordToPosition(cannonBall.position), t1);
+
+		Vector3 startPos = CoordToPosition(new GameReferee.Coord(cannonBall.srcX, cannonBall.srcY));
+		Vector3 endPos = CoordToPosition(cannonBall.position);
+
+		Vector3 startTurnPos = Vector3.Lerp(startPos, endPos, t1);
+		Vector3 endTurnPos = Vector3.Lerp(startPos, endPos, t2);
+
+		if (paused)
+			yield break;
+		
+		if (nIter == 0)
+		{
+			nIter = 1;
+			i = 1;
+		}
+
+		while (i <= nIter)
+		{
+			float t = ((float)i / (float)nIter);
+			cannonBallGO.transform.position = Vector3.Lerp(startTurnPos, endTurnPos, t);
+			yield return new WaitForSeconds(0f);
 			i++;
 		}
 	}
@@ -326,6 +365,7 @@ public class GameManager : MonoBehaviour {
 
 		if (oldPlayers == null)
 			return ;
+		
 		for (int i = 0; i < players.Count; i++)
 		{
 			var player = players[i];
@@ -341,6 +381,13 @@ public class GameManager : MonoBehaviour {
 				StartCoroutine(anim);
 			}
 		}
+
+		for (int i = 0; i < cannonBalls.Count; i++)
+		{
+			var cAnim = CannonBallAnimation(cannonBalls[i], cannonBallPool.Get(i));
+			animationCoroutines.Enqueue(cAnim);
+			StartCoroutine(cAnim);
+		}
 	}
 
 	void StopAnimations()
@@ -355,10 +402,11 @@ public class GameManager : MonoBehaviour {
 	{
 		GameReferee 				gr;
 		List< GameReferee.Player >	oldPlayers;
+		List< GameReferee.Cannonball > cannonBalls;
 
-		if (round > 0 && round < snapshots.Count)
+		if (round >= 0 && snapshots.ContainsKey(round))
 		{
-			snapshots[round].FastCheck(out gr, out oldPlayers);
+			snapshots[round].FastCheck(out gr, out oldPlayers, out cannonBalls);
 			foreach (var ship in oldPlayers[0].shipsAlive)
 			{
 				GameObject ghost;
@@ -409,7 +457,7 @@ public class GameManager : MonoBehaviour {
 		ghostBoatPool.SetUpdated(false);
 		ShowPreviousBoatGhost();
 		ShowFolowingAnimations();
-		ghostBoatPool.RemoveUnused(() => {});
+		ghostBoatPool.RemoveUnused((g) => {});
 
 		StartAnimations();
 	}
@@ -504,11 +552,10 @@ public class GameManager : MonoBehaviour {
 		{
 			GameObject g;
 			if ((g = cannonBallPool.Get(i)) == null)
+			{
 				g = cannonBallPool.Set(Instantiate(cannonBallPrefab, gameAssetRoot), i);
-
-			float dist = Vector2.Distance(new Vector2(cannonBall.srcX, cannonBall.srcY), new Vector2(cannonBall.position.x, cannonBall.position.y));
-			float t = (float)cannonBall.remainingTurns / (float)cannonBall.initialRemainingTurns;
-			g.transform.position = Vector3.Lerp(CoordToPosition(new GameReferee.Coord(cannonBall.srcX, cannonBall.srcY)), CoordToPosition(cannonBall.position), t);
+				Destroy(Instantiate(ploufPrefab, g.transform.position, Quaternion.identity, gameAssetRoot), 1);
+			}
 
 			cannonBallPool.Update(i);
 			i++;
@@ -523,8 +570,11 @@ public class GameManager : MonoBehaviour {
 
 		hexGrid.UpdateMap();
 
-		rumBarrelPool.RemoveUnused(() => {});
-		minePool.RemoveUnused(() => {});
+		rumBarrelPool.RemoveUnused((g) => {});
+		minePool.RemoveUnused((g) => {});
+		cannonBallPool.RemoveUnused((g) => {
+			Destroy(Instantiate(ploufPrefab, g.transform.position, Quaternion.identity));
+		});
 	}
 
 	public void GameOver(bool win)
@@ -600,7 +650,7 @@ public class GameManager : MonoBehaviour {
 	public void OnFirstClicked()
 	{
 		round = 0;
-		snapshots[0].Restore(out referee, out oldPlayers);
+		snapshots[0].Restore(out referee, out oldPlayers, out cannonBalls);
 		UpdateView();
 		Pause();
 		round++;
@@ -612,7 +662,7 @@ public class GameManager : MonoBehaviour {
 		if (round != 0)
 		{
 			round--;
-			snapshots[round].Restore(out referee, out oldPlayers);
+			snapshots[round].Restore(out referee, out oldPlayers, out cannonBalls);
 			UpdateView();
 			Pause();
 		}
@@ -634,7 +684,7 @@ public class GameManager : MonoBehaviour {
 		if (round < totalRounds - 1)
 		{
 			round++;
-			snapshots[round].Restore(out referee, out oldPlayers);
+			snapshots[round].Restore(out referee, out oldPlayers, out cannonBalls);
 			UpdateView();
 			Pause();
 		}
@@ -642,7 +692,7 @@ public class GameManager : MonoBehaviour {
 
 	public void OnLastClicked()
 	{
-		snapshots.Last().Value.Restore(out referee, out oldPlayers);
+		snapshots.Last().Value.Restore(out referee, out oldPlayers, out cannonBalls);
 		round = snapshots.Count - 1;
 		UpdateView();
 		Pause();
@@ -655,7 +705,7 @@ public class GameManager : MonoBehaviour {
 		if (!sliderUpdateDisabled && val < snapshots.Count)
 		{
 			round = (int)val;
-			snapshots[(int)val].Restore(out referee, out oldPlayers);
+			snapshots[(int)val].Restore(out referee, out oldPlayers, out cannonBalls);
 			Pause();
 			UpdateView();
 		}
