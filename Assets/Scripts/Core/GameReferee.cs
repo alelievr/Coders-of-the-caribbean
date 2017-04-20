@@ -102,7 +102,7 @@ public class GameReferee {
     private static  Regex PLAYER_INPUT_WAIT_PATTERN = new Regex("WAIT(?:\\s+(?<message>.+))?", RegexOptions.IgnoreCase);
     private static  Regex PLAYER_INPUT_PORT_PATTERN = new Regex("PORT(?:\\s+(?<message>.+))?", RegexOptions.IgnoreCase);
     private static  Regex PLAYER_INPUT_STARBOARD_PATTERN = new Regex("STARBOARD(?:\\s+(?<message>.+))?", RegexOptions.IgnoreCase);
-    private static  Regex PLAYER_INPUT_FIRE_PATTERN = new Regex("FIRE (?<x>[0-9]{1,8})\\s+(?<y>[0-9]{1,8})(?:\\s+(?<message>.+))?", RegexOptions.IgnoreCase);
+    private static  Regex PLAYER_INPUT_FIRE_PATTERN = new Regex("FIRE (?<x>-?[0-9]{1,8})\\s+(?<y>-?[0-9]{1,8})(?:\\s+(?<message>.+))?", RegexOptions.IgnoreCase);
     private static  Regex PLAYER_INPUT_MINE_PATTERN = new Regex("MINE(?:\\s+(?<message>.+))?", RegexOptions.IgnoreCase);
 
     public static int clamp(int val, int min, int max) {
@@ -931,7 +931,7 @@ public class GameReferee {
         }
     }
 
-    private void checkCollisions(Ship ship) {
+    private void checkBarrelCollisions(Ship ship) {
         Coord bow = ship.bow();
         Coord stern = ship.stern();
         Coord center = ship.position;
@@ -944,7 +944,9 @@ public class GameReferee {
             }
             return false;
         });
+    }
 
+    private void checkMineCollisions() {
         // Collision with the mines
         mines.RemoveAll(mine => {
             List<Damage> mineDamage = mine.explode(ships, false);
@@ -955,6 +957,13 @@ public class GameReferee {
             }
             return false;
         });
+    }
+
+    private void checkCollisions() {
+        foreach (Ship ship in this.ships)
+            checkBarrelCollisions(ship);
+
+        checkMineCollisions();
     }
 
     private void moveShips() {
@@ -1012,12 +1021,10 @@ public class GameReferee {
                 collisions.Clear();
             }
 
-            foreach (Player player in players) {
-                foreach (Ship ship in player.shipsAlive) {
-                    ship.position = ship.newPosition;
-                    checkCollisions(ship);
-                }
-            }
+            foreach (Ship ship in this.ships)
+                ship.position = ship.newPosition;
+                
+            checkCollisions();
         }
     }
 
@@ -1055,12 +1062,10 @@ public class GameReferee {
         }
 
         // Apply rotation
-        foreach (Player player in players) {
-            foreach (Ship ship in player.shipsAlive) {
-                ship.orientation = ship.newOrientation;
-                checkCollisions(ship);
-            }
-        }
+        foreach (Ship ship in this.ships)
+            ship.orientation = ship.newOrientation;
+
+        checkCollisions();
     }
 
     private bool gameIsOver() {
