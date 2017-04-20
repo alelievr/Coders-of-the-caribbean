@@ -7,6 +7,7 @@ using UnityEngine;
  **/
 public class PlayerAI : MonoBehaviour
 {
+    [HideInInspector]
     public bool playTurnInputOverride = false;
 
 	public virtual string PlayTurn(

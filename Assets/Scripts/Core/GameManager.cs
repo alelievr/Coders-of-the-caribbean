@@ -9,7 +9,7 @@ using Debug = UnityEngine.Debug;
 public class GameManager : MonoBehaviour {
 
 	[Header("Players")]
-	public PlayerAI		playerAI;
+	public PlayerAI[]	playerAIs;
 	public PlayerAI[]	enemyAIs;
 
 	[Space()]
@@ -44,8 +44,9 @@ public class GameManager : MonoBehaviour {
 	const int		SECOND_PLAYER = 1;
 
 	int				enemyAIId = 0;
+	int				playerAIId = 0;
 
-	const float		FRAME_DELAY_60FPS = 0.01666666667f;
+	const float		FRAME_DELAY_60FPS = 0.009f;
 
 	GameReferee				referee;
 	static HexGrid			hexGrid;
@@ -89,6 +90,10 @@ public class GameManager : MonoBehaviour {
 	List< GameReferee.Player >		oldPlayers;
 
 	Dictionary< int, GameSnapshot >			snapshots = new Dictionary< int, GameSnapshot >();
+
+	const string			PLAYER_AI_ID_KEY = "playerAIID";
+	const string			ENEMY_AI_ID_KEY = "enemyAIID";
+
 #endregion
 
 #region Start and Initializaion
@@ -96,6 +101,9 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		referee = new GameReferee();
+
+		playerAIId = PlayerPrefs.GetInt(PLAYER_AI_ID_KEY, 0);
+		enemyAIId = PlayerPrefs.GetInt(ENEMY_AI_ID_KEY, 0);
 
 		rumBarrelPool = new GameObjectPool(GameReferee.MAX_RUM_BARRELS * 2);
 		minePool = new GameObjectPool(GameReferee.MAX_MINES * 2);
@@ -124,10 +132,13 @@ public class GameManager : MonoBehaviour {
 		
 		snapshots.Clear();
 		
+		playerGUI.UpdatePlayerName(playerAIs[playerAIId].name);
+		playerGUI.UpdateEnemyName(enemyAIs[enemyAIId].name);
+		
 		round = 0;
 		totalRounds = 0;
 		
-		props.put("seed", (randomSeed) ? Random.Range(-200000, 20000) : seed);
+		props.put("seed", (randomSeed) ? Random.Range(-200000, 2000000) : seed);
 		props.put("shipsPerPlayer", shipsPerPlayer);
 		//props.put("mineCount", mineCount);
 		//props.put("barrelCount", barrelCount);
@@ -151,6 +162,7 @@ public class GameManager : MonoBehaviour {
 		gameOver = false;
 		playerGUI.GameOver(true, false);
 		playerGUI.GameOver(false, false);
+		PlayerPrefs.Save();
 		StartGame();
 	}
 
@@ -186,7 +198,7 @@ public class GameManager : MonoBehaviour {
 			hexGrid.ClearColors();
 
 			//execute players AI
-			var firstPlayerOutput = ExecutePlayerActions(playerAI, FIRST_PLAYER);
+			var firstPlayerOutput = ExecutePlayerActions(playerAIs[playerAIId], FIRST_PLAYER);
 			var secondPlayerOutput = ExecutePlayerActions(enemyAIs[enemyAIId], SECOND_PLAYER);
 	
 			//send result to the referee
@@ -312,11 +324,14 @@ public class GameManager : MonoBehaviour {
 		if (shipGO == null || ship == null || oldShip == null)
 			yield break;
 
-		shipGO.transform.position = CoordToPosition(oldShip.position);
-
 		//if time is paused, do not start animations
 		if (paused)
+		{
+			shipGO.transform.position = CoordToPosition(ship.position);
 			yield break;
+		}
+
+		shipGO.transform.position = CoordToPosition(oldShip.position);
 		
 		if (nIter == 0)
 		{
@@ -329,7 +344,7 @@ public class GameManager : MonoBehaviour {
 			float t = ((float)i / (float)nIter);
 			shipGO.transform.rotation = Quaternion.Lerp(shipGO.transform.rotation, Quaternion.Euler(0, 0, ship.orientation * 60 - 90), t);
 			shipGO.transform.localPosition = Vector3.Lerp(CoordToPosition(oldShip.position), CoordToPosition(ship.position), t);
-			yield return new WaitForSecondsRealtime(0f);
+			yield return new WaitForEndOfFrame();
 			i++;
 		}
 	}
@@ -727,14 +742,28 @@ public class GameManager : MonoBehaviour {
 	public void OnEnemyUpButtonClicked()
 	{
 		enemyAIId = (enemyAIId == 0) ? enemyAIs.Length - 1 : enemyAIId - 1;
-		playerGUI.UpdateEnemyName(enemyAIs[enemyAIId].name);
+		PlayerPrefs.SetInt(ENEMY_AI_ID_KEY, enemyAIId);
 		ReStartGame();
 	}
 
 	public void OnEnemyDownButtonClicked()
 	{
 		enemyAIId = ++enemyAIId % enemyAIs.Length;
-		playerGUI.UpdateEnemyName(enemyAIs[enemyAIId].name);
+		PlayerPrefs.SetInt(ENEMY_AI_ID_KEY, enemyAIId);
+		ReStartGame();
+	}
+
+	public void OnPlayerUpButtonClicked()
+	{
+		playerAIId = (playerAIId == 0) ? playerAIs.Length - 1 : playerAIId - 1;
+		PlayerPrefs.SetInt(PLAYER_AI_ID_KEY, playerAIId);
+		ReStartGame();
+	}
+
+	public void OnPlayerDownButtonClicked()
+	{
+		playerAIId = ++playerAIId % playerAIs.Length;
+		PlayerPrefs.SetInt(PLAYER_AI_ID_KEY, playerAIId);
 		ReStartGame();
 	}
 
